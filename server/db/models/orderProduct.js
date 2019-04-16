@@ -7,7 +7,7 @@ const OrderProduct = db.define('order-product', {
     allowNull: false
   },
   price: {
-    type: Sequelize.STRING,
+    type: Sequelize.FLOAT,
     allowNull: false
   }
 })

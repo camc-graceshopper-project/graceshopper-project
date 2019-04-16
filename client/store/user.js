@@ -16,7 +16,7 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+const removeUser = (id) => ({type: REMOVE_USER}, id)
 
 /**
  * THUNK CREATORS
@@ -29,6 +29,15 @@ export const me = () => async dispatch => {
     console.error(err)
   }
 }
+
+export const removeUserThunk = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/users/${id}`)
+    dispatch(removeUser(id))
+  } catch (err) {
+    console.error(err)
+  }
+ }
 
 export const auth = (email, password, method) => async dispatch => {
   let res
@@ -64,7 +73,8 @@ export default function(state = defaultUser, action) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
-      return defaultUser
+    const updatedUsers = state.filter(user => user.id !== action.id)
+    return updatedUsers
     default:
       return state
   }

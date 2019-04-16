@@ -15,3 +15,18 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    if (User.isAdmin) {
+      User.destroy({
+        where: {
+          id: req.params.userId
+        }
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
+ })
+

@@ -12,8 +12,8 @@ async function seed() {
     User.create({email: 'cody@email.com', password: '123', googleId: 'XYZ1234'}),
     User.create({email: 'murphy@email.com', password: '123', googleId: 'QWE567'}),
     User.create({email: 'meng@email.com', password: '123', googleId: 'SGH964'}),
-    User.create({email: 'murphy@email.com', password: '123', googleId: 'RTY002'}),
-    User.create({email: 'murphy@email.com', password: '123', googleId: 'HKS233'})
+    User.create({email: 'armon@email.com', password: '123', googleId: 'RTY002'}),
+    User.create({email: 'tiger@email.com', password: '123', googleId: 'HKS233'})
   ])
 
   const orders = await Promise.all([

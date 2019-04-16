@@ -17,11 +17,11 @@ async function seed() {
   ])
 
   const orders = await Promise.all([
-    Order.create({status: 'Created', total_price: 14.99 }),
-    Order.create({status: 'Processing', total_price: 14.99 }),
-    Order.create({status: 'Cancelled', total_price: 14.99 }),
-    Order.create({status: 'Completed', total_price: 14.99 }),
-    Order.create({status: 'Created', total_price: 14.99 })
+    Order.create({status: 'Created', totalPrice: 14.99 }),
+    Order.create({status: 'Processing', totalPrice: 14.99 }),
+    Order.create({status: 'Cancelled', totalPrice: 14.99 }),
+    Order.create({status: 'Completed', totalPrice: 14.99 }),
+    Order.create({status: 'Created', totalPrice: 14.99 })
   ])
 
   const reviews = await Promise.all([

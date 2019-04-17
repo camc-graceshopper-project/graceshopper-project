@@ -21,7 +21,6 @@ class AllProducts extends React.Component {
                 {product.name}
                 <img src={product.image} />
               </Link>
-              {/* <button type="button" onClick */}
             </div>
           )
         })}
@@ -42,4 +41,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapDispatchToProps, mapDispatchToProps)(AllProducts)
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)

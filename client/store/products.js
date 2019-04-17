@@ -4,7 +4,7 @@ import axios from 'axios'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 
 //Initial State
-const products = []
+const defaultProducts = []
 
 //Action Creator
 
@@ -21,9 +21,22 @@ export const fetchProducts = () => {
   return async dispatch => {
     try {
       const res = await axios.get('/api/products')
-      dispatch(getProducts(res.data || products))
+      dispatch(getProducts(res.data || defaultProducts))
     } catch (err) {
       console.error(err)
     }
   }
 }
+
+//Reducer
+
+const productsReducer = (state = defaultProducts, action) => {
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return action.products
+    default:
+      return state
+  }
+}
+
+export default productsReducer

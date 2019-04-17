@@ -5,7 +5,11 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllProducts from './components/AllProducts'
+<<<<<<< HEAD
 import AllOrders from './components/AllOrders'
+=======
+import SingleOrder from './components/SingleOrder'
+>>>>>>> origin/single-order-componenct
 import SingleProduct from './components/SingleProduct'
 
 /**
@@ -30,7 +34,11 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+<<<<<<< HEAD
             <Route path="/orders" component={AllOrders} />
+=======
+            <Route path="/orders/:orderId" component={SingleOrder} />
+>>>>>>> origin/single-order-componenct
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

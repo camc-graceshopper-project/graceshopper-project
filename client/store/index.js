@@ -6,28 +6,16 @@ import productsReducer from './products'
 import singleProductReducer from './singleProduct'
 import user from './user'
 import cart from './cart'
-<<<<<<< HEAD
 import singleOrder from './singleOrder'
-=======
 import orders from './orders'
->>>>>>> origin/admin-allOrders-clientSide
 
 const reducer = combineReducers({
   user: user,
   products: productsReducer,
-<<<<<<< HEAD
   cart: cart,
   singleOrder: singleOrder,
-  singleProduct: singleProductReducer
-=======
-<<<<<<< HEAD
-  cart: cart,
-  orders: orders
-=======
   singleProduct: singleProductReducer,
-  cart: cart
->>>>>>> d71f48ef30a5b672faa126ce7eae32e627c1bee1
->>>>>>> origin/admin-allOrders-clientSide
+  orders: orders
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

@@ -31,11 +31,8 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-<<<<<<< HEAD
             <Route path="/orders/:orderId" component={SingleOrder} />
-=======
             <Route path="/orders" component={AllOrders} />
->>>>>>> origin/admin-allOrders-clientSide
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
+const {isAdmin} = require('../middleware/auth.middeware')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -16,15 +17,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:userId', async (req, res, next) => {
+router.delete('/:userId', isAdmin, async (req, res, next) => {
   try {
-    if (User.isAdmin) {
       User.destroy({
         where: {
           id: req.params.userId
         }
       })
-    }
+
   } catch (err) {
     next(err)
   }

@@ -1,16 +1,19 @@
 const router = require('express').Router()
-const {Order, User} = require('../db/models')
+const {Order} = require('../db/models')
+const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
 
-router.get('/:orderId', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
-    ////LINE8-12  SHOULD BE UNCOMMENTED LATER!!!
-    // if (!User.isAdmin) {
-    //   const err = new Error('You are not authorized!')
-    //   err.status = 403
-    //   return next(err)
-    // }
+    const allOrders = await Order.findAll()
+    res.json(allOrders)
+  } catch (err) {
+    next(err)
+  }
+})
 
+router.get('/:orderId', isAdmin, async (req, res, next) => {
+  try {
     const order = await Order.findOne({
       where: {id: req.params.orderId}
     })
@@ -20,15 +23,8 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
-router.put('/:orderId', async (req, res, next) => {
+router.put('/:orderId', isAdmin, async (req, res, next) => {
   try {
-    //LINE26-30  SHOULD BE UNCOMMENTED LATER!!!
-    // if (!User.isAdmin) {
-    //   const err = new Error('You are not authorized!')
-    //   err.status = 403
-    //   return next(err)
-    // }
-
     const order = await Order.findOne({
       where: {id: req.params.orderId}
     })

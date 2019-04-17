@@ -4,6 +4,7 @@ const Category = require('./category')
 const Review = require('./review')
 const Order = require('./order')
 const OrderProduct = require('./orderProduct')
+const CategoryProduct = require('./categoryProduct')
 
 Review.belongsTo(Product);
 Product.hasMany(Review);
@@ -33,5 +34,6 @@ module.exports = {
   Category,
   Review,
   Order,
-  OrderProduct
+  OrderProduct,
+  CategoryProduct
 }

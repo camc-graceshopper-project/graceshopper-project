@@ -22,8 +22,6 @@ router.post('/', (req, res, next) => {
   const newCartItem = req.body;
   let currentCart = req.session.cart;
   
-  
-
   // check if current item already exists in cart, if so, update quantity for that item.
   // let currentCartProductIds;
   // currentCart.forEach((product) => {
@@ -41,3 +39,4 @@ router.post('/', (req, res, next) => {
   
   res.json(currentCart)
 })
+

@@ -3,6 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
+import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class AllProducts extends React.Component {
                 {product.name}
                 <img src={product.image} />
               </Link>
+              <AddToCartButtonAllProducts product={product} />
             </div>
           )
         })}

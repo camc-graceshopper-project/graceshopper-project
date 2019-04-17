@@ -6,6 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
+import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 
 /**
@@ -30,7 +31,11 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+<<<<<<< HEAD
             <Route path="/orders/:orderId" component={SingleOrder} />
+=======
+            <Route path="/orders" component={AllOrders} />
+>>>>>>> origin/admin-allOrders-clientSide
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

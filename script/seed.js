@@ -39,7 +39,7 @@ async function seed() {
         description:
           'Say Bonjour to these little landmarks that bring big fruit flavor! If you’re planning a Persian party or just need a French fruit fix an Eiffel Tower gummy is the perfect way to satisfy!',
         price: 10.45,
-        inventory: 34000,
+        inventory: 98970,
         image:
           'https://cdn.candynation.com/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/e/i/eiffel__44963.jpg'
       }),

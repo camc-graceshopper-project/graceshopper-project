@@ -46,7 +46,7 @@ const singleOrderReducer = (state = defaultOrder, action) => {
     case GET_SINGLE_ORDER:
       return action.singleOrder
     case UPDATE_SINGLE_ORDER:
-
+        return {...state, status: action.orderUpdates}
     default:
       return state
   }

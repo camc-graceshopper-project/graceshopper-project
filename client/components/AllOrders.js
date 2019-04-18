@@ -20,7 +20,7 @@ class AllOrders extends React.Component {
                 {orders.map(order => {
                     return (
                         <div key={order.id}>
-                          <Link to={`/order/${order.id}`}>
+                          <Link to={`/orders/${order.id}`}>
                              <p>Order Status: {order.status}</p>
                              <p>Order Price: {order.totalPrice}</p>
                           </Link>

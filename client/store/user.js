@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const DELETE_USER =  'DELETE_USER'
 
 /**
  * INITIAL STATE
@@ -16,7 +17,8 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
-const removeUser = (id) => ({type: REMOVE_USER}, id)
+const removeUser = () => ({type: REMOVE_USER})
+const deleteUser = (id) => ({type: DELETE_USER, id})
 
 /**
  * THUNK CREATORS
@@ -30,10 +32,10 @@ export const me = () => async dispatch => {
   }
 }
 
-export const removeUserThunk = id => async dispatch => {
+export const deleteUserThunk = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/users/${id}`)
-    dispatch(removeUser(id))
+    dispatch(deleteUser(id))
   } catch (err) {
     console.error(err)
   }
@@ -72,7 +74,7 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
-    case REMOVE_USER:
+    case DELETE_USER:
     const updatedUsers = state.filter(user => user.id !== action.id)
     return updatedUsers
     default:

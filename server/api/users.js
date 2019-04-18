@@ -17,6 +17,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+
 router.delete('/:userId', isAdmin, async (req, res, next) => {
   try {
       User.destroy({

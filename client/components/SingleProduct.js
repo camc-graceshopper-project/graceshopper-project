@@ -7,16 +7,21 @@ class SingleProduct extends React.Component {
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.id)
   }
-  
-  
+
   render() {
     return (
       <div>
         <div>
-        {this.props.singleProduct.name}
-        <img src={this.props.singleProduct.image} />
+          {this.props.singleProduct.name}
+          <img src={this.props.singleProduct.image} />
         </div>
-        <AddToCartButtonSingleProduct product={this.props.singleProduct}/>
+        {this.props.singleProduct.inventory ? (
+          <div>
+            <AddToCartButtonSingleProduct product={this.props.singleProduct} />
+          </div>
+        ) : (
+          <div>Currently unavailable.</div>
+        )}
       </div>
     )
   }

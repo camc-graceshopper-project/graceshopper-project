@@ -8,7 +8,8 @@ const {
   Product,
   Category,
   OrderProduct,
-  CategoryProduct
+  CategoryProduct,
+  Cart
 } = require('../server/db/models')
 
 async function seed() {
@@ -149,6 +150,27 @@ async function seed() {
         orderId: 2,
         productId: 1
       })
+    ])
+
+    const category_products = await Promise.all([
+      CategoryProduct.create({productId: 1, categoryId: 2}),
+      CategoryProduct.create({productId: 1, categoryId: 3}),
+      CategoryProduct.create({productId: 2, categoryId: 4}),
+      CategoryProduct.create({productId: 2, categoryId: 1}),
+      CategoryProduct.create({productId: 2, categoryId: 2}),
+      CategoryProduct.create({productId: 3, categoryId: 2}),
+      CategoryProduct.create({productId: 4, categoryId: 4}),
+      CategoryProduct.create({productId: 4, categoryId: 5}),
+      CategoryProduct.create({productId: 5, categoryId: 3})
+    ])
+
+    const carts = await Promise.all([
+      Cart.create({productId: 2, userId: 1, quantity: 1}),
+      Cart.create({productId: 4, userId: 1, quantity: 3}),
+      Cart.create({productId: 1, userId: 1, quantity: 3}),
+      Cart.create({productId: 3, userId: 2, quantity: 1}),
+      Cart.create({productId: 4, userId: 2, quantity: 2}),
+      Cart.create({productId: 1, userId: 3, quantity: 2})
     ])
 
     const category_products = await Promise.all([

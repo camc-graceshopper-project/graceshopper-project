@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Order, Review, Product, Category, OrderProduct, CategoryProduct} = require('../server/db/models')
+const {User, Order, Review, Product, Category, OrderProduct, CategoryProduct, Cart} = require('../server/db/models')
 
 async function seed() {
   try{
@@ -50,11 +50,11 @@ async function seed() {
   ])
 
   const order_products = await Promise.all([
-    OrderProduct.create({quantity: 1, price: 6.00, orderId: 1, productId: 1}),
-    OrderProduct.create({quantity: 2, price: 10.45, orderId: 1, productId: 2}),
-    OrderProduct.create({quantity: 3, price: 14.99, orderId: 1, productId: 3}),
-    OrderProduct.create({quantity: 1, price: 13.99, orderId: 2, productId: 4}),
-    OrderProduct.create({quantity: 1, price: 13.25, orderId: 2, productId: 1})
+    OrderProduct.create({inventory: 1, price: 6.00, orderId: 1, productId: 1}),
+    OrderProduct.create({inventory: 2, price: 10.45, orderId: 1, productId: 2}),
+    OrderProduct.create({inventory: 3, price: 14.99, orderId: 1, productId: 3}),
+    OrderProduct.create({inventory: 1, price: 13.99, orderId: 2, productId: 4}),
+    OrderProduct.create({inventory: 1, price: 13.25, orderId: 2, productId: 1})
   ])
   
   const category_products = await Promise.all([
@@ -67,6 +67,15 @@ async function seed() {
     CategoryProduct.create({productId: 4, categoryId: 4}),
     CategoryProduct.create({productId: 4, categoryId: 5}),
     CategoryProduct.create({productId: 5, categoryId: 3}),
+  ])
+  
+  const carts = await Promise.all([
+    Cart.create({productId: 2, userId: 1, quantity: 1}),
+    Cart.create({productId: 4, userId: 1, quantity: 3}),
+    Cart.create({productId: 1, userId: 1, quantity: 3}),
+    Cart.create({productId: 3, userId: 2, quantity: 1}),
+    Cart.create({productId: 4, userId: 2, quantity: 2}),
+    Cart.create({productId: 1, userId: 3, quantity: 2})
   ])
 
 } catch (err) {

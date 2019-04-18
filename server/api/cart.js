@@ -1,6 +1,15 @@
 const router = require('express').Router()
 module.exports = router
 
+// initialize empty cart array if one does not exist
+router.use('/', (req, res, next) => {
+  if (!req.session.cart) {
+    req.session.cart = [];
+  }
+  next();
+})
+
+// get cart from session or from database if user
 // router.get('/', async (req, res, next) => {
 //   try {
     
@@ -10,13 +19,6 @@ module.exports = router
 //   }
 // })
 
-// initialize empty cart array if one does not exist
-router.use('/', (req, res, next) => {
-  if (!req.session.cart) {
-    req.session.cart = [];
-  }
-  next();
-})
 
 router.post('/', (req, res, next) => {
   const newCartItem = req.body;

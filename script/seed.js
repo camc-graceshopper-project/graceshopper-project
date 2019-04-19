@@ -173,17 +173,6 @@ async function seed() {
       Cart.create({productId: 1, userId: 3, quantity: 2})
     ])
 
-    const category_products = await Promise.all([
-      CategoryProduct.create({productId: 1, categoryId: 2}),
-      CategoryProduct.create({productId: 1, categoryId: 3}),
-      CategoryProduct.create({productId: 2, categoryId: 4}),
-      CategoryProduct.create({productId: 2, categoryId: 1}),
-      CategoryProduct.create({productId: 2, categoryId: 2}),
-      CategoryProduct.create({productId: 3, categoryId: 2}),
-      CategoryProduct.create({productId: 4, categoryId: 4}),
-      CategoryProduct.create({productId: 4, categoryId: 5}),
-      CategoryProduct.create({productId: 5, categoryId: 3})
-    ])
   } catch (err) {
     console.log(err)
   }

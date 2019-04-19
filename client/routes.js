@@ -8,6 +8,7 @@ import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
+import {fetchCategories} from './store/categories'
 
 /**
  * COMPONENT
@@ -15,6 +16,7 @@ import SingleProduct from './components/SingleProduct'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCategories()
   }
 
   render() {
@@ -57,7 +59,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    fetchCategories: () => dispatch(fetchCategories())
   }
 }
 

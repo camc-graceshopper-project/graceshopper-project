@@ -25,6 +25,10 @@ async function seed() {
       User.create({email: 'tiger@email.com', password: '123', isAdmin: false})
     ])
 
+
+
+
+
     const products = await Promise.all([
       Product.create({
         name: 'Swedish Fish',
@@ -153,6 +157,7 @@ async function seed() {
     ])
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const order_products = await Promise.all([
     OrderProduct.create({inventory: 1, price: 6.00, orderId: 1, productId: 1}),
     OrderProduct.create({inventory: 2, price: 10.45, orderId: 1, productId: 2}),
@@ -182,6 +187,9 @@ async function seed() {
     Cart.create({productId: 1, userId: 3, quantity: 2})
   ])
 =======
+=======
+
+>>>>>>> 8c0627d8a0bf1fa456fdc7911a8021ff417928e0
     const category_products = await Promise.all([
       CategoryProduct.create({productId: 1, categoryId: 2}),
       CategoryProduct.create({productId: 1, categoryId: 3}),
@@ -193,7 +201,11 @@ async function seed() {
       CategoryProduct.create({productId: 4, categoryId: 5}),
       CategoryProduct.create({productId: 5, categoryId: 3})
     ])
+<<<<<<< HEAD
 >>>>>>> e87d7ecb5be23bf8d158d55ca37b0fc3536cd9c7
+=======
+
+>>>>>>> 8c0627d8a0bf1fa456fdc7911a8021ff417928e0
 
     const carts = await Promise.all([
       Cart.create({productId: 2, userId: 1, quantity: 1}),

@@ -35,3 +35,16 @@ router.put('/:orderId', isAdmin, async (req, res, next) => {
     next(error)
   }
 })
+
+router.get('/status/:status', async (req, res, next) => {
+  try{
+    const statusOrders = await Order.findAll({
+      where: {
+        status: req.params.status
+      }
+    })
+    res.json(statusOrders)
+  }catch(error){
+    next(error)
+  }
+})

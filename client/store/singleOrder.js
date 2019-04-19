@@ -31,9 +31,8 @@ export const fetchSingleOrder = orderId => async dispatch => {
 export const updateOneOrder = (id, orderUpdates) => {
   return async dispatch => {
     try {
-      await axios.patch(`/api/orders/${id}`, {
-        updatedFields: {orderUpdates}
-      })
+      console.log('ORDER-UPDATES', orderUpdates)
+      await axios.put(`/api/orders/${id}`, {status: orderUpdates})
       dispatch(updateSingleOrder(id, orderUpdates))
     } catch (error) {
       console.log(`ERROR updating order with id ${id}.`, error)

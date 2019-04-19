@@ -8,6 +8,7 @@ import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
+import ChangeStatusForm from './components/ChangeStatusForm'
 
 /**
  * COMPONENT
@@ -31,8 +32,10 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route exact path="/orders/:orderId" component={SingleOrder} />
+            <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
             <Route path="/orders" component={AllOrders} />
+
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

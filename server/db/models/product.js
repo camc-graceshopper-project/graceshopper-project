@@ -12,9 +12,10 @@ const Product = db.define('product', {
   },
   image: {
     type: Sequelize.STRING,
-    defaultValue: 'http://schwieterts.com/wp-content/uploads/2016/07/Schwieterts-Candy-18-300x300.jpg'
+    defaultValue:
+      'http://schwieterts.com/wp-content/uploads/2016/07/Schwieterts-Candy-18-300x300.jpg'
   },
-  quantity: {
+  inventory: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
@@ -22,7 +23,6 @@ const Product = db.define('product', {
     type: Sequelize.FLOAT,
     allowNull: false
   }
-  
 })
 
 module.exports = Product

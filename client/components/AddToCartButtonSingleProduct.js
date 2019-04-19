@@ -3,16 +3,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../store/cart'
 
-class AddToCartButtonSingleProduct extends React.Class {
+class AddToCartButtonSingleProduct extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       quantity: 1
     }
     this.handleIncriment = this.handleIncriment.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.product = props.product;
   }
 
 
@@ -32,8 +31,9 @@ class AddToCartButtonSingleProduct extends React.Class {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.product.quantity = this.state.quantity;
-    this.props.addToCart(this.product);
+    let newProductOrder = this.props.product;
+    newProductOrder.quantity = this.state.quantity;
+    this.props.addToCart(newProductOrder);
   }
 
   render() {

@@ -23,13 +23,13 @@ async function seed() {
     Product.create({name: 'Columbina Mini Fruit Filled Drops', description: 'Colombina Fruit Filled Assorted Candies, Pack of 12, Total 396 Fruity Filled Candies from Colombia', price: 13.99, inventory: 20456, image: 'https://images-na.ssl-images-amazon.com/images/I/71RRlB6srQL._SX522_.jpg'}),
     Product.create({name: 'Japanese Nestle Kit Kat (14 bars)', description: 'Nestle Japan Kit Kat Chocolate Sakura Sake Flavor 14 bars.', price: 14.99, inventory: 15778, image: 'https://images-na.ssl-images-amazon.com/images/I/A1EMqIfmQKL._SX522_.jpg' })
   ])
-  
+
   const orders = await Promise.all([
     Order.create({status: 'Created', totalPrice: 14.99, userId: 3 }),
-    Order.create({status: 'Completed', totalPrice: 14.99, userId: 2 }),
+    Order.create({status: 'Completed', totalPrice: 14.99, userId: 2 })
   ])
-  
-  
+
+
 
   const reviews = await Promise.all([
     Review.create({title: 'Great product!', description: 'The Swedish fish were fresh and they shipped well even in the extreme heat we were having.', productId: 1, userId: 2}),
@@ -56,7 +56,7 @@ async function seed() {
     OrderProduct.create({inventory: 1, price: 13.99, orderId: 2, productId: 4}),
     OrderProduct.create({inventory: 1, price: 13.25, orderId: 2, productId: 1})
   ])
-  
+
   const category_products = await Promise.all([
     CategoryProduct.create({productId: 1, categoryId: 2}),
     CategoryProduct.create({productId: 1, categoryId: 3}),
@@ -68,7 +68,7 @@ async function seed() {
     CategoryProduct.create({productId: 4, categoryId: 5}),
     CategoryProduct.create({productId: 5, categoryId: 3}),
   ])
-  
+
   const carts = await Promise.all([
     Cart.create({productId: 2, userId: 1, quantity: 1}),
     Cart.create({productId: 4, userId: 1, quantity: 3}),

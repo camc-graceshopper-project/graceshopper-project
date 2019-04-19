@@ -1,8 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateOneOrder} from '../store/singleOrder'
-import SingleOrder from './SingleOrder';
+
 
 export class ChangeStatusForm extends React.Component {
     constructor (props) {
@@ -23,15 +22,14 @@ export class ChangeStatusForm extends React.Component {
     }
 
     handleSubmit (evt) {
-        console.log('THIS.PROPS', this.props)
         evt.preventDefault()
         const statusChange = this.state.status;
         const singleOrder = this.props.singleOrder
-        console.log('THIS.STATE.STATUS', this.state.status)
         this.props.updateOneOrder(singleOrder.id, statusChange)
         this.setState({
             status: ''
         })
+
     }
 
     render(){

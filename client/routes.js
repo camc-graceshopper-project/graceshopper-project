@@ -8,8 +8,10 @@ import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
+import {fetchCart} from './store/cart' 
 import ChangeStatusForm from './components/ChangeStatusForm'
 import AddCategoryForm from './components/AddCategoryForm'
+
 
 /**
  * COMPONENT
@@ -17,6 +19,7 @@ import AddCategoryForm from './components/AddCategoryForm'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCart()
   }
 
   render() {
@@ -62,7 +65,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    fetchCart: () => dispatch(fetchCart())
   }
 }
 

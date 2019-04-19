@@ -32,7 +32,7 @@ class AddToCartButtonSingleProduct extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     let newProductOrder = this.props.product;
-    newProductOrder.quantity = this.state.quantity;
+    newProductOrder.cart = {quantity: this.state.quantity};
     this.props.addToCart(newProductOrder);
   }
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchCart} from './cart';
 
 /**
  * ACTION TYPES
@@ -55,6 +56,13 @@ export const auth = (email, password, method) => async dispatch => {
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
+  
+  try {
+    dispatch(fetchCart())
+  } catch (err) {
+    console.error(err)
+  }
+  
 }
 
 export const logout = () => async dispatch => {
@@ -65,6 +73,13 @@ export const logout = () => async dispatch => {
   } catch (err) {
     console.error(err)
   }
+  
+  try {
+    dispatch(fetchCart())
+  } catch(err) {
+    console.error(err)
+  }
+  
 }
 
 /**

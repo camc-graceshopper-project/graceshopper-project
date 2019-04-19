@@ -13,9 +13,10 @@ class Checkbox extends Component {
       <div>
         {categories.map(category => {
           return (
-            <input type="checkbox" key={category.id}>
-              {category.name}
-            </input>
+            <div key={category.id}>
+              <input type="checkbox" value={category.id} />{' '}
+              <h5>{category.name}</h5>{' '}
+            </div>
           )
         })}
       </div>

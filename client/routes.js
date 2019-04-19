@@ -9,6 +9,7 @@ import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 import ChangeStatusForm from './components/ChangeStatusForm'
+import CreateNewProductForm from './components/CreateNewProductForm'
 
 /**
  * COMPONENT
@@ -33,9 +34,12 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route exact path="/orders/:orderId" component={SingleOrder} />
-            <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
+            <Route
+              exact
+              path="/orders/:orderId/changeStatus"
+              component={ChangeStatusForm}
+            />
             <Route path="/orders" component={AllOrders} />
-
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

@@ -13,10 +13,15 @@ class SingleProduct extends React.Component {
       <div>
         <div>
           {this.props.singleProduct.name}
+          <br />
           <img src={this.props.singleProduct.image} />
         </div>
         {this.props.singleProduct.inventory ? (
           <div>
+            <p>
+              Product Description:
+              {this.props.singleProduct.description}
+            </p>
             <AddToCartButtonSingleProduct product={this.props.singleProduct} />
           </div>
         ) : (

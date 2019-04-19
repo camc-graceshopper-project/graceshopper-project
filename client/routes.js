@@ -9,6 +9,7 @@ import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 import ChangeStatusForm from './components/ChangeStatusForm'
+import AddCategoryForm from './components/AddCategoryForm'
 
 /**
  * COMPONENT
@@ -35,6 +36,7 @@ class Routes extends Component {
             <Route exact path="/orders/:orderId" component={SingleOrder} />
             <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
             <Route path="/orders" component={AllOrders} />
+            <Route exact path="/add-category" component={AddCategoryForm} />
 
           </Switch>
         )}

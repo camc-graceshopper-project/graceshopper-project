@@ -14,8 +14,8 @@ class Checkbox extends Component {
         {categories.map(category => {
           return (
             <div key={category.id}>
-              <input type="checkbox" value={category.id} />{' '}
-              <h5>{category.name}</h5>{' '}
+              <input type="checkbox" onClick={} value={category.id} />
+              <h5>{category.name}</h5>
             </div>
           )
         })}

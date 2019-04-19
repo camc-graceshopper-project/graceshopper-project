@@ -12,4 +12,4 @@ const OrderProduct = db.define('order-product', {
   }
 })
 
-module.exports = OrderProduct;
+module.exports = OrderProduct

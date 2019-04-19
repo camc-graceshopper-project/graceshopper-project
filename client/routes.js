@@ -9,6 +9,8 @@ import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 import {fetchCategories} from './store/categories'
+import {fetchCart} from './store/cart'
+import ChangeStatusForm from './components/ChangeStatusForm'
 
 /**
  * COMPONENT
@@ -17,6 +19,7 @@ class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
     this.props.fetchCategories()
+    this.props.fetchCart()
   }
 
   render() {
@@ -33,7 +36,12 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route exact path="/orders/:orderId" component={SingleOrder} />
+            <Route
+              exact
+              path="/orders/:orderId/changeStatus"
+              component={ChangeStatusForm}
+            />
             <Route path="/orders" component={AllOrders} />
           </Switch>
         )}
@@ -60,7 +68,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    fetchCategories: () => dispatch(fetchCategories())
+    fetchCategories: () => dispatch(fetchCategories()),
+    fetchCart: () => dispatch(fetchCart())
   }
 }
 

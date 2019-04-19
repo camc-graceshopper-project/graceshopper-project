@@ -11,8 +11,6 @@ class AllOrders extends React.Component {
     }
 
     statusChange = (event) => {
-
-
       this.props.statusOrders(event.target.value)
 
     }
@@ -23,23 +21,27 @@ class AllOrders extends React.Component {
         return(
           <div>
             <select onChange={this.statusChange}>
-              <option>Filter Status...</option>
+              <option>Filter By Status...</option>
               <option value='Created'>Created</option>
               <option value='Processing'>Processing</option>
               <option value='Completed'>Completed</option>
               <option value='Cancelled'>Cancelled</option>
             </select>
             <div>
+              <ol>
                 {orders.map(order => {
                     return (
-                        <div key={order.id}>
-                          <Link to={`/orders/${order.id}`}>
-                             <p>Order Status: {order.status}</p>
+                        <li key={order.id}>
+
+                             <p>Order ID: {order.id}</p>
                              <p>Order Price: {order.totalPrice}</p>
-                          </Link>
-                        </div>
-                      )
+                             <p>Order Status: {order.status}</p>
+                             <Link to={`/orders/${order.id}`}><p><u>View</u></p></Link>
+
+                        </li>
+                    )
                 })}
+              </ol>
             </div>
           </div>
 

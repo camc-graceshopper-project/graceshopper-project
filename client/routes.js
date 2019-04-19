@@ -10,6 +10,8 @@ import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 import ChangeStatusForm from './components/ChangeStatusForm'
 import CreateNewProductForm from './components/CreateNewProductForm'
+import {fetchCart} from './store/cart' 
+
 
 /**
  * COMPONENT
@@ -17,6 +19,7 @@ import CreateNewProductForm from './components/CreateNewProductForm'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCart()
   }
 
   render() {
@@ -39,7 +42,9 @@ class Routes extends Component {
               path="/orders/:orderId/changeStatus"
               component={ChangeStatusForm}
             />
+            <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
             <Route path="/orders" component={AllOrders} />
+
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
@@ -64,7 +69,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    fetchCart: () => dispatch(fetchCart())
   }
 }
 

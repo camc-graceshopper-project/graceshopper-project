@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import {connect} from 'react-redux'
-import {addToCart} from '../store/cart'
+import {removeFromCart} from '../store/cart'
 
 const AddToCartButtonAllProducts = function(props) {
   let product = props.product;
@@ -26,8 +26,8 @@ const AddToCartButtonAllProducts = function(props) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (product) => dispatch(addToCart(product))
+    removeFromCart: (product) => dispatch(removeFromCart(product))
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddToCartButtonAllProducts)
+export default connect(null, mapDispatchToProps)(RemoveButton)

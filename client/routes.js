@@ -8,6 +8,8 @@ import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
+import {fetchCategories} from './store/categories'
+import {fetchCart} from './store/cart'
 import ChangeStatusForm from './components/ChangeStatusForm'
 import AddCategoryForm from './components/AddCategoryForm'
 
@@ -17,6 +19,8 @@ import AddCategoryForm from './components/AddCategoryForm'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCategories()
+    this.props.fetchCart()
   }
 
   render() {
@@ -34,7 +38,11 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route exact path="/orders/:orderId" component={SingleOrder} />
-            <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
+            <Route
+              exact
+              path="/orders/:orderId/changeStatus"
+              component={ChangeStatusForm}
+            />
             <Route path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
 
@@ -62,7 +70,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    fetchCategories: () => dispatch(fetchCategories()),
+    fetchCart: () => dispatch(fetchCart())
   }
 }
 

@@ -1,12 +1,21 @@
 import axios from 'axios'
 
-//Action Types
-const GET_CATEGORIES = 'GET_CATEGORIES'
+/**
+ * ACTION TYPES
+ */
 
-//Initial State
+const GET_CATEGORIES = 'GET_CATEGORIES'
+const ADD_CATEGORY = 'ADD_CATEGORY'
+
+/**
+ * INITIAL STATE
+ */
+
 const defaultCategories = []
 
-//Action Creator
+/**
+* ACTION CREATORS
+*/
 
 const getCategories = categories => {
   return {
@@ -15,7 +24,17 @@ const getCategories = categories => {
   }
 }
 
-//Thunk Creator
+const addCategory = (category) => {
+
+  return {
+    type: ADD_CATEGORY,
+    category
+  }
+}
+
+/**
+* THUNK CREATORS
+*/
 
 export const fetchCategories = () => {
   return async dispatch => {
@@ -28,14 +47,32 @@ export const fetchCategories = () => {
   }
 }
 
-//Reducer
+export const postCategory = (category) => {
+
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/categories/add-category', category)
+      dispatch(addCategory(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+/**
+* REDUCER
+*/
+
 const categoriesReducer = (state = defaultCategories, action) => {
   switch (action.type) {
     case GET_CATEGORIES:
       return action.categories
+    case ADD_CATEGORY:
+      return [...state, action.category]
     default:
       return state
   }
 }
+
 
 export default categoriesReducer

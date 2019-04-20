@@ -11,6 +11,7 @@ import SingleProduct from './components/SingleProduct'
 import {fetchCategories} from './store/categories'
 import {fetchCart} from './store/cart'
 import ChangeStatusForm from './components/ChangeStatusForm'
+import AddCategoryForm from './components/AddCategoryForm'
 
 /**
  * COMPONENT
@@ -43,6 +44,8 @@ class Routes extends Component {
               component={ChangeStatusForm}
             />
             <Route path="/orders" component={AllOrders} />
+            <Route exact path="/add-category" component={AddCategoryForm} />
+
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

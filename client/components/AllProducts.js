@@ -16,6 +16,9 @@ class AllProducts extends React.Component {
       <div>No Candies!</div>
     ) : (
       <div>
+        <Link to='/add-category'>Add Category</Link>
+        <br />
+        <br />
         <div>
           <CheckBox />
         </div>
@@ -27,6 +30,8 @@ class AllProducts extends React.Component {
                 <img src={product.image} />
               </Link>
               <AddToCartButtonAllProducts product={product} />
+              <br />
+              <br />
             </div>
           )
         })}
@@ -37,7 +42,8 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
+    user: state.user
   }
 }
 

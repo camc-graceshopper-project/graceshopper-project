@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { Cart, User, Product } = require('../db/models')
 const { isAdmin, isAdminOrIsUser } = require('../middleware/auth.middeware')
-const { addToCart } = require('./apiUtils');
+const { addToCart, removeFromCart } = require('./apiUtils');
 module.exports = router
 
 
@@ -103,10 +103,35 @@ router.post('/', async (req, res, next) => {
       })
       let cartData = await Cart.bulkCreate(associationsToMake)
 
-      res.json(cartData);
+      res.json('success');
     }
   } catch (error) {
     next(error)
   }
 })
 
+router.post('/remove', async (req, res, next) => {
+  try {
+    const oldCartItem = req.body;
+    
+    let myUser = await User.findByPk(req.user.id);
+    let currentCart = await myUser.getProducts();
+    
+    let newCart = removeFromCart(currentCart, oldCartItem);
+    
+    const destroyedItems = await Cart.destroy({where: {userId: req.user.id}})
+    
+    let associationsToMake = [];
+    newCart.forEach((item) => {
+      let association = { productId: item.id, userId: req.user.id, quantity: item.cart.quantity }
+      associationsToMake.push(association);
+    })
+    let cartData = await Cart.bulkCreate(associationsToMake)
+
+    res.json('success');
+    
+  } catch (err) {
+    next(err)
+  }
+  
+})

@@ -17,7 +17,14 @@ const addToCart = function (cart, newItem) {
   
 }
 
+const removeFromCart = function(cart, oldItem) {
+  let newCart = cart.filter((currentItem) => {
+    return (currentItem.id !== oldItem.id)
+  })
+  return newCart;
+}
+
 
 module.exports.addToCart = addToCart;
-
+module.exports.removeFromCart = removeFromCart;
 

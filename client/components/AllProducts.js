@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
 import CreateNewProductForm from './CreateNewProductForm'
+import CheckBox from './CheckBox'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -17,6 +18,12 @@ class AllProducts extends React.Component {
     ) : (
       <div>
         <CreateNewProductForm />
+        <Link to="/add-category">Add Category</Link>
+        <br />
+        <br />
+        <div>
+          <CheckBox />
+        </div>
         {products.map(product => {
           return (
             <div key={product.id}>
@@ -28,6 +35,8 @@ class AllProducts extends React.Component {
                 <h4>Price: ${product.price}</h4>
               </Link>
               <AddToCartButtonAllProducts product={product} />
+              <br />
+              <br />
             </div>
           )
         })}
@@ -38,7 +47,8 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
+    user: state.user
   }
 }
 

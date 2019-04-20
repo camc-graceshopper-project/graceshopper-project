@@ -10,8 +10,9 @@ import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 import ChangeStatusForm from './components/ChangeStatusForm'
 import CreateNewProductForm from './components/CreateNewProductForm'
-import {fetchCart} from './store/cart' 
-
+import {fetchCart} from './store/cart'
+import {fetchCategories} from './store/categories'
+import AddCategoryForm from './components/AddCategoryForm'
 
 /**
  * COMPONENT
@@ -19,6 +20,7 @@ import {fetchCart} from './store/cart'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCategories()
     this.props.fetchCart()
   }
 
@@ -42,9 +44,13 @@ class Routes extends Component {
               path="/orders/:orderId/changeStatus"
               component={ChangeStatusForm}
             />
-            <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
+            <Route
+              exact
+              path="/orders/:orderId/changeStatus"
+              component={ChangeStatusForm}
+            />
             <Route path="/orders" component={AllOrders} />
-
+            <Route exact path="/add-category" component={AddCategoryForm} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
@@ -70,6 +76,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
+    fetchCategories: () => dispatch(fetchCategories()),
     fetchCart: () => dispatch(fetchCart())
   }
 }

@@ -19,6 +19,9 @@ const addToStoreCart = (cart) => ({type: ADD_TO_CART, cart})
 
 const loadedCart = (cart) => ({type: LOADED_CART, cart})
 
+const removeFromStoreCart = (cart) => ({type: LOADED_CART, cart})
+
+
 /**
  * THUNK CREATORS
  */
@@ -40,7 +43,14 @@ export const fetchCart = () => async dispatch => {
   }
 }
 
-
+export const removeFromCart = (product) => async dispatch => {
+  try {
+    const cartResponse = await axios.post('./api/cart/remove', product);
+    dispatch(removeFromStoreCart(updatedCart.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 /**
  * REDUCER
@@ -55,3 +65,13 @@ export default function(state = defaultCart, action) {
       return state
   }
 }
+
+
+
+
+// cart on store
+// backend remove from cart thingy
+// respond with cart
+// update it on store
+// move onto editing quantity
+// i guess use onchange there. or have a submit thing on there too.

@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import RemoveButton from './RemoveButton'
+import ChangeQuantityCart from './ChangeQuantityCart'
 
 class Cart extends React.Component {
   
@@ -26,6 +27,8 @@ class Cart extends React.Component {
                 {product.name}
                 <img src={product.image} />
               </Link>
+              
+              <ChangeQuantityCart product={product}/>
               
               <RemoveButton product={product}/>
               

@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 'use strict'
 
 const db = require('../server/db')
@@ -11,115 +12,173 @@ const {
   CategoryProduct,
   Cart
 } = require('../server/db/models')
+const Faker = require('faker')
+
+let testVar = Faker.lorem.sentence();
+console.log(testVar);
 
 async function seed() {
   try {
     await db.sync({force: true})
     console.log('db synced!')
+    
+    let fakeUsers = [];
+    fakeUsers.push({email: 'cody@email.com', password: '123', isAdmin: true});
+    fakeUsers.push({email: 'murphy@email.com', password: '123', isAdmin: false})
+    for (let i = 0; i < 98; i++) {
+      let userObj = {};
+      userObj.email = Faker.internet.email();
+      userObj.password = Faker.internet.password();
+      userObj.isAdmin = false;
+      fakeUsers.push(userObj);
+    }
+    
+    const users = await User.bulkCreate(fakeUsers);
 
-    const users = await Promise.all([
-      User.create({email: 'cody@email.com', password: '123', isAdmin: true}),
-      User.create({email: 'murphy@email.com', password: '123', isAdmin: false}),
-      User.create({email: 'meng@email.com', password: '123', isAdmin: false}),
-      User.create({email: 'armon@email.com', password: '123', isAdmin: false}),
-      User.create({email: 'tiger@email.com', password: '123', isAdmin: false})
-    ])
 
 
+    let fakeProducts = [];
+    for (let i = 0; i < 50; i++) {
+      let productObj = {};
+      productObj.name = Faker.commerce.productName()
+      productObj.description = Faker.lorem.paragraphs(2, '\n')
+      productObj.price = Number(Faker.finance.amount(3.00, 15.00, 2));
+      productObj.inventory = 0;
+      productObj.photo = Faker.image.abstract()
+      fakeProducts.push(productObj);
+    }
+    for (let i = 0; i < 1500; i++) {
+      let productObj = {};
+      productObj.name = Faker.commerce.productName()
+      productObj.description = Faker.lorem.paragraphs(2, '\n')
+      productObj.price = Number(Faker.finance.amount(3.00 ,15.00 ,2));
+      productObj.inventory = Faker.random.number(20000)
+      productObj.photo = Faker.image.abstract()
+      fakeProducts.push(productObj);
+    }
+    const products = await Product.bulkCreate(fakeProducts)
 
+    // const products = await Promise.all([
+    //   Product.create({
+    //     name: 'Swedish Fish',
+    //     description:
+    //       'The most famous fish of all are the chewy Swedish Fish! Now the mini fish you love are available in Tropical flavors: Pina Colada, Tropical Island, Beachy Punch, and Passion Fruit. Original the Swedish Fish were made by Malaco, came to North America in the late 60s, and are now manufactured by Cadbury Adams. Each bag contains 8oz. 6 bags per order.',
+    //     price: 13.25,
+    //     inventory: 24000,
+    //     photo:
+    //       'https://cdn.candynation.com/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/t/r/tropical_swedish_fish_8oz_6ct.jpg'
+    //   }),
+    //   Product.create({
+    //     name: 'Paris Gummy Eiffel Towers',
+    //     description:
+    //       'Say Bonjour to these little landmarks that bring big fruit flavor! If you’re planning a Persian party or just need a French fruit fix an Eiffel Tower gummy is the perfect way to satisfy!',
+    //     price: 10.45,
+    //     inventory: 0,
+    //     image:
+    //       'https://cdn.candynation.com/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/e/i/eiffel__44963.jpg'
+    //   }),
+    //   Product.create({
+    //     name: 'Pulparindo De La Rosa Candy Bar',
+    //     description:
+    //       'From Mexico, Pulparindo, one of many forms of spicy, sour, salty sweets made from tamarind pulp and chili. This one resembles a miniature, individually wrapped fruit leather — though slightly thicker and less stretchy — with a satisfyingly gritty texture, and a serious kick of heat.',
+    //     price: 6,
+    //     inventory: 10,
+    //     image:
+    //       'https://pixel.nymag.com/imgs/daily/strategist/2017/03/08/Drugstore-Candy/Pulparindo.w600.h396.jpg'
+    //   }),
+    //   Product.create({
+    //     name: 'Columbina Mini Fruit Filled Drops',
+    //     description:
+    //       'Colombina Fruit Filled Assorted Candies, Pack of 12, Total 396 Fruity Filled Candies from Colombia',
+    //     price: 13.99,
+    //     inventory: 20456,
+    //     image:
+    //       'https://images-na.ssl-images-amazon.com/images/I/71RRlB6srQL._SX522_.jpg'
+    //   }),
+    //   Product.create({
+    //     name: 'Japanese Nestle Kit Kat (14 bars)',
+    //     description:
+    //       'Nestle Japan Kit Kat Chocolate Sakura Sake Flavor 14 bars.',
+    //     price: 14.99,
+    //     inventory: 15778,
+    //     image:
+    //       'https://images-na.ssl-images-amazon.com/images/I/A1EMqIfmQKL._SX522_.jpg'
+    //   })
+    // ])
+    
+    
+    let fakeOrders = [];
+    for (let i = 0; i < 500; i++) {
+      let orderObj = {};
+      orderObj.status = Faker.random.arrayElement(['Created', 'Processing', 'Cancelled', 'Completed'])
+      orderObj.totalPrice = Faker.finance.amount(5.00 , 50.00, 2);
+      orderObj.userId = Faker.random.number({min: 1, max: 100})
+      fakeOrders.push(orderObj)
+    }
+    const orders = await Order.bulkCreate(fakeOrders);
 
+    
+    
+    let fakeReviews = [];
+    for (let i = 0; i < 850; i++) {
+      let reviewObj = {};
+      reviewObj.rating = Faker.random.number({min: 1, max: 5})
+      reviewObj.title = Faker.lorem.sentence()
+      reviewObj.description = Faker.lorem.paragraph({min: 1, max: 5})
+      reviewObj.productId = Faker.random.number({min: 60, max: 1400})
+      reviewObj.userId = Faker.random.number({min: 1, max: 100})
+      fakeReviews.push(reviewObj);
+    }
+    const reviews = Review.bulkCreate(fakeReviews);
+    
+    
+    // const reviews = await Promise.all([
+    //   Review.create({
+    //     title: 'Great product!',
+    //     description:
+    //       'The Swedish fish were fresh and they shipped well even in the extreme heat we were having.',
+    //     productId: 1,
+    //     userId: 2
+    //   }),
+    //   Review.create({
+    //     title: 'Favorite Candy!!',
+    //     description:
+    //       'My favorite candy of all time and I have so much of it! Not sure how long it will last though.',
+    //     productId: 1,
+    //     userId: 1
+    //   }),
+    //   Review.create({
+    //     title: 'Big Surprise',
+    //     description:
+    //       'A friend of mine loves this candy. I bought this huge bag of them and placed it in a large tin for Christmas. They loved it!',
+    //     productId: 1,
+    //     userId: 3
+    //   }),
+    //   Review.create({
+    //     title: 'Good Quality!',
+    //     description:
+    //       'Quick delivery. Great price. Soft and chewy. Didn’t last long in our house!',
+    //     productId: 3,
+    //     userId: 4
+    //   }),
+    //   Review.create({
+    //     title: '100% Satisfied',
+    //     description:
+    //       'At first I was very skeptical buying food off here, but it tasted completely fresh',
+    //     productId: 2,
+    //     userId: 2
+    //   })
+    // ])
 
-    const products = await Promise.all([
-      Product.create({
-        name: 'Swedish Fish',
-        description:
-          'The most famous fish of all are the chewy Swedish Fish! Now the mini fish you love are available in Tropical flavors: Pina Colada, Tropical Island, Beachy Punch, and Passion Fruit. Original the Swedish Fish were made by Malaco, came to North America in the late 60s, and are now manufactured by Cadbury Adams. Each bag contains 8oz. 6 bags per order.',
-        price: 13.25,
-        inventory: 24000,
-        photo:
-          'https://cdn.candynation.com/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/t/r/tropical_swedish_fish_8oz_6ct.jpg'
-      }),
-      Product.create({
-        name: 'Paris Gummy Eiffel Towers',
-        description:
-          'Say Bonjour to these little landmarks that bring big fruit flavor! If you’re planning a Persian party or just need a French fruit fix an Eiffel Tower gummy is the perfect way to satisfy!',
-        price: 10.45,
-        inventory: 0,
-        image:
-          'https://cdn.candynation.com/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/e/i/eiffel__44963.jpg'
-      }),
-      Product.create({
-        name: 'Pulparindo De La Rosa Candy Bar',
-        description:
-          'From Mexico, Pulparindo, one of many forms of spicy, sour, salty sweets made from tamarind pulp and chili. This one resembles a miniature, individually wrapped fruit leather — though slightly thicker and less stretchy — with a satisfyingly gritty texture, and a serious kick of heat.',
-        price: 6,
-        inventory: 10,
-        image:
-          'https://pixel.nymag.com/imgs/daily/strategist/2017/03/08/Drugstore-Candy/Pulparindo.w600.h396.jpg'
-      }),
-      Product.create({
-        name: 'Columbina Mini Fruit Filled Drops',
-        description:
-          'Colombina Fruit Filled Assorted Candies, Pack of 12, Total 396 Fruity Filled Candies from Colombia',
-        price: 13.99,
-        inventory: 20456,
-        image:
-          'https://images-na.ssl-images-amazon.com/images/I/71RRlB6srQL._SX522_.jpg'
-      }),
-      Product.create({
-        name: 'Japanese Nestle Kit Kat (14 bars)',
-        description:
-          'Nestle Japan Kit Kat Chocolate Sakura Sake Flavor 14 bars.',
-        price: 14.99,
-        inventory: 15778,
-        image:
-          'https://images-na.ssl-images-amazon.com/images/I/A1EMqIfmQKL._SX522_.jpg'
-      })
-    ])
-
-    const orders = await Promise.all([
-      Order.create({status: 'Created', totalPrice: 14.99, userId: 3}),
-      Order.create({status: 'Completed', totalPrice: 14.99, userId: 2})
-    ])
-
-    const reviews = await Promise.all([
-      Review.create({
-        title: 'Great product!',
-        description:
-          'The Swedish fish were fresh and they shipped well even in the extreme heat we were having.',
-        productId: 1,
-        userId: 2
-      }),
-      Review.create({
-        title: 'Favorite Candy!!',
-        description:
-          'My favorite candy of all time and I have so much of it! Not sure how long it will last though.',
-        productId: 1,
-        userId: 1
-      }),
-      Review.create({
-        title: 'Big Surprise',
-        description:
-          'A friend of mine loves this candy. I bought this huge bag of them and placed it in a large tin for Christmas. They loved it!',
-        productId: 1,
-        userId: 3
-      }),
-      Review.create({
-        title: 'Good Quality!',
-        description:
-          'Quick delivery. Great price. Soft and chewy. Didn’t last long in our house!',
-        productId: 3,
-        userId: 4
-      }),
-      Review.create({
-        title: '100% Satisfied',
-        description:
-          'At first I was very skeptical buying food off here, but it tasted completely fresh',
-        productId: 2,
-        userId: 2
-      })
-    ])
-
+    
+    // let fakeReviews = [];
+    // for (let i = 0; i < 1000; i++) {
+    //   let reviewObj = {};
+    //   reviewObj.
+    //   fakeReviews.push(reviewObj);
+    // }
+    // const reviews = Review.bulkCreate(fakeReviews);
+    
     const categories = await Promise.all([
       Category.create({name: 'Country'}),
       Category.create({name: 'Soft'}),
@@ -127,7 +186,16 @@ async function seed() {
       Category.create({name: 'Sweet'}),
       Category.create({name: 'Sour'})
     ])
-
+    
+    
+    // let fakeReviews = [];
+    // for (let i = 0; i < 1000; i++) {
+    //   let reviewObj = {};
+    //   reviewObj.
+    //   fakeReviews.push(reviewObj);
+    // }
+    // const reviews = Review.bulkCreate(fakeReviews);
+    
     const order_products = await Promise.all([
       OrderProduct.create({inventory: 1, price: 6.0, orderId: 1, productId: 1}),
       OrderProduct.create({
@@ -157,6 +225,15 @@ async function seed() {
     ])
 
 
+    
+    // let fakeReviews = [];
+    // for (let i = 0; i < 1000; i++) {
+    //   let reviewObj = {};
+    //   reviewObj.
+    //   fakeReviews.push(reviewObj);
+    // }
+    // const reviews = Review.bulkCreate(fakeReviews);
+    
     const category_products = await Promise.all([
       CategoryProduct.create({productId: 1, categoryId: 2}),
       CategoryProduct.create({productId: 1, categoryId: 3}),
@@ -170,6 +247,16 @@ async function seed() {
     ])
 
 
+    
+    
+    // let fakeReviews = [];
+    // for (let i = 0; i < 1000; i++) {
+    //   let reviewObj = {};
+    //   reviewObj.
+    //   fakeReviews.push(reviewObj);
+    // }
+    // const reviews = Review.bulkCreate(fakeReviews);
+    
     const carts = await Promise.all([
       Cart.create({productId: 2, userId: 1, quantity: 1}),
       Cart.create({productId: 4, userId: 1, quantity: 3}),

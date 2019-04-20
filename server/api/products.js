@@ -19,31 +19,31 @@ router.get('/', async (req, res, next) => {
         return { name: cat };
       });
       
-      
       products = await Product.findAll({
-        limit: 10,
-        where: {
-          inventory: {
-            [Op.gte]: 1
-          },
-        },
         include: [{
           model: Category,
           where: {
             [Op.and]: formattedCategories
           }
-        }]
-      })
-
-    } else {
-
-      products = await Product.findAll({
-        limit: 10,
+        }],
         where: {
           inventory: {
             [Op.gte]: 1
           },
         },
+        limit: 10,
+      })
+      
+
+    } else {
+
+      products = await Product.findAll({
+        where: {
+          inventory: {
+            [Op.gte]: 1
+          },
+        },
+        limit: 10,
       })
     }
 

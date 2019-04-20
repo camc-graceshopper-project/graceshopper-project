@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-statements */
 'use strict'
 
@@ -53,7 +54,7 @@ async function seed() {
       productObj.description = Faker.lorem.paragraphs(2, '\n')
       productObj.price = Number(Faker.finance.amount(3.00 ,15.00 ,2));
       productObj.inventory = Faker.random.number(20000)
-      productObj.photo = Faker.image.abstract()
+      productObj.image = Faker.image.abstract()
       fakeProducts.push(productObj);
     }
     const products = await Product.bulkCreate(fakeProducts)
@@ -124,147 +125,97 @@ async function seed() {
       let reviewObj = {};
       reviewObj.rating = Faker.random.number({min: 1, max: 5})
       reviewObj.title = Faker.lorem.sentence()
-      reviewObj.description = Faker.lorem.paragraph({min: 1, max: 5})
+      reviewObj.description = Faker.lorem.paragraph()
       reviewObj.productId = Faker.random.number({min: 60, max: 1400})
       reviewObj.userId = Faker.random.number({min: 1, max: 100})
       fakeReviews.push(reviewObj);
     }
-    const reviews = Review.bulkCreate(fakeReviews);
+    const reviews = await Review.bulkCreate(fakeReviews);
     
     
-    // const reviews = await Promise.all([
-    //   Review.create({
-    //     title: 'Great product!',
-    //     description:
-    //       'The Swedish fish were fresh and they shipped well even in the extreme heat we were having.',
-    //     productId: 1,
-    //     userId: 2
-    //   }),
-    //   Review.create({
-    //     title: 'Favorite Candy!!',
-    //     description:
-    //       'My favorite candy of all time and I have so much of it! Not sure how long it will last though.',
-    //     productId: 1,
-    //     userId: 1
-    //   }),
-    //   Review.create({
-    //     title: 'Big Surprise',
-    //     description:
-    //       'A friend of mine loves this candy. I bought this huge bag of them and placed it in a large tin for Christmas. They loved it!',
-    //     productId: 1,
-    //     userId: 3
-    //   }),
-    //   Review.create({
-    //     title: 'Good Quality!',
-    //     description:
-    //       'Quick delivery. Great price. Soft and chewy. Didn’t last long in our house!',
-    //     productId: 3,
-    //     userId: 4
-    //   }),
-    //   Review.create({
-    //     title: '100% Satisfied',
-    //     description:
-    //       'At first I was very skeptical buying food off here, but it tasted completely fresh',
-    //     productId: 2,
-    //     userId: 2
-    //   })
-    // ])
-
     
-    // let fakeReviews = [];
-    // for (let i = 0; i < 1000; i++) {
-    //   let reviewObj = {};
-    //   reviewObj.
-    //   fakeReviews.push(reviewObj);
-    // }
-    // const reviews = Review.bulkCreate(fakeReviews);
+    let categoryNames = ['Gummy', 'Sour', 'French', 'Italian', 'Canadian', 'Mexican', 'Spicy', 'Chocolate', 'Fruity', 'Fizzy', 'Chinese', 'Hard-Candies', 'German', 'Swedish', 'American', 'Russian', 'Argentinian']
     
-    const categories = await Promise.all([
-      Category.create({name: 'Country'}),
-      Category.create({name: 'Soft'}),
-      Category.create({name: 'Hard'}),
-      Category.create({name: 'Sweet'}),
-      Category.create({name: 'Sour'})
-    ])
+    let fakeCategories = [];
+    for (let i = 0; i < categoryNames.length; i++) {
+      let categoryObj = {};
+      categoryObj.name = categoryNames[i]
+      fakeCategories.push(categoryObj);
+    }
+    const Categories = await Category.bulkCreate(fakeCategories);
     
     
-    // let fakeReviews = [];
-    // for (let i = 0; i < 1000; i++) {
-    //   let reviewObj = {};
-    //   reviewObj.
-    //   fakeReviews.push(reviewObj);
-    // }
-    // const reviews = Review.bulkCreate(fakeReviews);
     
-    const order_products = await Promise.all([
-      OrderProduct.create({inventory: 1, price: 6.0, orderId: 1, productId: 1}),
-      OrderProduct.create({
-        inventory: 2,
-        price: 10.45,
-        orderId: 1,
-        productId: 2
-      }),
-      OrderProduct.create({
-        inventory: 3,
-        price: 14.99,
-        orderId: 1,
-        productId: 3
-      }),
-      OrderProduct.create({
-        inventory: 1,
-        price: 13.99,
-        orderId: 2,
-        productId: 4
-      }),
-      OrderProduct.create({
-        inventory: 1,
-        price: 13.25,
-        orderId: 2,
-        productId: 1
+    // must re-do this so theres no repeats.
+    // i.e. there cant be an association between order 5 and product 20
+    // two times. the same product wouldnt be listed in the same order two times
+    // theyd just have the same association with a higher quantity instead.
+    // or just ignore it for now and disable unique constraint on model somehow
+    // when fix it, make i < like 3000, to ensure statistically that every
+    // order likely has some products in it (or we'll have empty orders)
+    let fakeOrderProducts = [];
+    for (let i = 0; i < 30; i++) {
+      let orderProductObj = {};
+      orderProductObj.quantity = Faker.random.number({min: 1, max: 10})
+      orderProductObj.price = Faker.finance.amount(5.00 , 15.00, 2);
+      orderProductObj.orderId = Faker.random.number({min: 1, max: 500})
+      orderProductObj.productId = Faker.random.number({min: 1, max: 1500})
+      fakeOrderProducts.push(orderProductObj);
+    }
+    const order_products = await OrderProduct.bulkCreate(fakeOrderProducts);
+    
+    
+    
+    // this is a helper function for the seed below
+    const doesAssocExist = function(arrOfAssoc, newAssoc) {
+      let doesExist = false;
+      let newItemKeys = Object.values(newAssoc);
+      
+      arrOfAssoc.forEach((item) => {
+        let itemKeys = Object.values(item);
+        let isEqual = itemKeys.every((key, idx) => {
+          return (key === newItemKeys[idx])
+        })
+        if (isEqual) {
+          doesExist = true;
+        }
       })
-    ])
-
-
+      return doesExist;
+    }
     
-    // let fakeReviews = [];
-    // for (let i = 0; i < 1000; i++) {
-    //   let reviewObj = {};
-    //   reviewObj.
-    //   fakeReviews.push(reviewObj);
-    // }
-    // const reviews = Review.bulkCreate(fakeReviews);
-    
-    const category_products = await Promise.all([
-      CategoryProduct.create({productId: 1, categoryId: 2}),
-      CategoryProduct.create({productId: 1, categoryId: 3}),
-      CategoryProduct.create({productId: 2, categoryId: 4}),
-      CategoryProduct.create({productId: 2, categoryId: 1}),
-      CategoryProduct.create({productId: 2, categoryId: 2}),
-      CategoryProduct.create({productId: 3, categoryId: 2}),
-      CategoryProduct.create({productId: 4, categoryId: 4}),
-      CategoryProduct.create({productId: 4, categoryId: 5}),
-      CategoryProduct.create({productId: 5, categoryId: 3})
-    ])
-
-
+    let fakeCategoryProducts = [];
+    let i = 1;
+    while (i < 1550) {
+      let categoryProductObj = {};
+      categoryProductObj.productId = i
+      categoryProductObj.categoryId = Faker.random.number({min: 1, max: categoryNames.length})
+      
+      if (!doesAssocExist(fakeCategoryProducts, categoryProductObj)) {
+      fakeCategoryProducts.push(categoryProductObj);
+      }
+      
+      let chanceToGoUpInProductId = Faker.random.number({min: 1, max: 100});
+      if (chanceToGoUpInProductId > 60) {
+        i++
+      }
+    }
+    const category_products = await CategoryProduct.bulkCreate(fakeCategoryProducts);
     
     
-    // let fakeReviews = [];
-    // for (let i = 0; i < 1000; i++) {
-    //   let reviewObj = {};
-    //   reviewObj.
-    //   fakeReviews.push(reviewObj);
-    // }
-    // const reviews = Review.bulkCreate(fakeReviews);
     
-    const carts = await Promise.all([
-      Cart.create({productId: 2, userId: 1, quantity: 1}),
-      Cart.create({productId: 4, userId: 1, quantity: 3}),
-      Cart.create({productId: 1, userId: 1, quantity: 3}),
-      Cart.create({productId: 3, userId: 2, quantity: 1}),
-      Cart.create({productId: 4, userId: 2, quantity: 2}),
-      Cart.create({productId: 1, userId: 3, quantity: 2})
-    ])
+    
+    let fakeCarts = [];
+    for (let i = 0; i < 250; i++) {
+      let cartObj = {};
+      cartObj.productId = Faker.random.number({min: 60, max: 1400})
+      cartObj.userId = Faker.random.number({min: 1, max: 100})
+      cartObj.quantity = Faker.random.number({min: 1, max: 15})
+      
+      if (!doesAssocExist(fakeCarts, cartObj)) {
+        fakeCarts.push(cartObj);
+      }
+    }
+    const carts = await Cart.bulkCreate(fakeCarts);
 
   } catch (err) {
     console.log(err)

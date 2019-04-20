@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
+import CheckBox from './CheckBox'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -15,6 +16,9 @@ class AllProducts extends React.Component {
       <div>No Candies!</div>
     ) : (
       <div>
+        <div>
+          <CheckBox />
+        </div>
         {products.map(product => {
           return (
             <div key={product.id}>

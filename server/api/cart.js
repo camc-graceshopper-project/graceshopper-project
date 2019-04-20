@@ -20,7 +20,6 @@ router.get('/', async (req, res, next) => {
     if (!req.user) {
       // console.log('not logged in cart');
       // console.log(req.session.cart);
-      console.log(req.session.cart);
       res.json(req.session.cart);
     } else {
 

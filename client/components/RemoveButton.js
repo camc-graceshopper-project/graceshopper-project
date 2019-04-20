@@ -3,20 +3,20 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {removeFromCart} from '../store/cart'
 
-const AddToCartButtonAllProducts = function(props) {
+const RemoveButton = function(props) {
   let product = props.product;
   product.cart = {quantity: 1}
   
   const handleSubmit = function(event) {
     event.preventDefault();
-    props.addToCart(product);
+    props.removeFromCart(product);
   }
   
   return (
     <div>
       <form onClick={handleSubmit}>
         <button type="submit">
-          Add To Cart
+          Remove From Cart
         </button>
       </form>
     </div>

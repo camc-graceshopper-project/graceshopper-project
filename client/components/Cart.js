@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
 import RemoveButton from './RemoveButton'
 
 class Cart extends React.Component {
@@ -28,9 +27,6 @@ class Cart extends React.Component {
                 <img src={product.image} />
               </Link>
               
-              //edit quantity stuff. similar to add to cart single product button
-              
-              // code this in a sec
               <RemoveButton product={product}/>
               
             </div>

@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-}
+})
 
 router.post('/add-category', isAdmin, async (req, res, next) => {
   
@@ -24,10 +24,6 @@ router.post('/add-category', isAdmin, async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-}
-
-
-
-
+})
 
 

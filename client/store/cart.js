@@ -19,15 +19,14 @@ const addToStoreCart = (cart) => ({type: ADD_TO_CART, cart})
 
 const loadedCart = (cart) => ({type: LOADED_CART, cart})
 
-const removeFromStoreCart = (cart) => ({type: LOADED_CART, cart})
-
 
 /**
  * THUNK CREATORS
  */
 export const addToCart = (product) => async dispatch => {
   try {
-    const updatedCart = await axios.post('/api/cart', product);
+    const cartResponse = await axios.post('/api/cart', product);
+    const updatedCart = await axios.get('/api/cart')
     dispatch(addToStoreCart(updatedCart.data))
   } catch (err) {
     console.log(err)
@@ -36,8 +35,8 @@ export const addToCart = (product) => async dispatch => {
 
 export const fetchCart = () => async dispatch => {
   try {
-    const cartResponse = await axios.get('/api/cart');
-    dispatch(loadedCart(cartResponse.data));
+    const updatedCart = await axios.get('/api/cart');
+    dispatch(loadedCart(updatedCart.data));
   } catch (err) {
     console.log(err)
   }
@@ -46,7 +45,8 @@ export const fetchCart = () => async dispatch => {
 export const removeFromCart = (product) => async dispatch => {
   try {
     const cartResponse = await axios.post('./api/cart/remove', product);
-    dispatch(removeFromStoreCart(updatedCart.data))
+    const updatedCart = await axios.get('/api/cart');
+    dispatch(loadedCart(updatedCart.data))
   } catch (err) {
     console.log(err)
   }

@@ -8,7 +8,6 @@ router.get('/', async (req, res, next) => {
   try {
     const categories = req.query.categories
     
-    
     console.log(categories);
     let products;
     if (categories) {

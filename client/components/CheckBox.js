@@ -32,7 +32,12 @@ class Checkbox extends React.Component {
       })
       await this.setState({checkedCats: newState})
     }
-    this.props.fetchProducts(this.props.match.params.page, this.state.checkedCats)
+    let path = window.location.pathname;
+    let splitPath = path.split('/');
+    let page = splitPath[splitPath.length-1]
+    console.log(page);
+    
+    this.props.fetchProducts(page, this.state.checkedCats)
   }
   
   render() {

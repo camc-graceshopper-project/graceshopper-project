@@ -10,6 +10,7 @@ import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
 import ChangeStatusForm from './components/ChangeStatusForm'
 import CreateNewProductForm from './components/CreateNewProductForm'
+import EditProductForm from './components/EditProductForm'
 import {fetchCart} from './store/cart'
 import {fetchCategories} from './store/categories'
 import AddCategoryForm from './components/AddCategoryForm'
@@ -51,6 +52,12 @@ class Routes extends Component {
               exact
               path="/adminpanel/postproduct"
               component={CreateNewProductForm}
+              Route
+            />
+            <Route
+              exact
+              path="/products/:productId/editproduct"
+              component={EditProductForm}
               Route
             />
             <Route exact path="/orders" component={AllOrders} />

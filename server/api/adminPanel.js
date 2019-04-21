@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
-const Sequelize = require('sequelize')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
 

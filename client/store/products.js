@@ -3,6 +3,7 @@ import axios from 'axios'
 //Action Types
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
+const EDIT_PRODUCT = 'EDIT_PRODUCT'
 
 //Initial State
 const defaultProducts = []
@@ -20,7 +21,13 @@ const createNewProduct = newProduct => {
     newProduct
   }
 }
-
+const editProduct = (id, newProductInfo) => {
+  return {
+    type: EDIT_PRODUCT,
+    id,
+    newProductInfo
+  }
+}
 //Thunk Creator
 export const fetchProducts = (categories = []) => {
   return async dispatch => {
@@ -44,6 +51,16 @@ export const addNewProduct = newProduct => {
     }
   }
 }
+export const editOneProduct = (id, newProductInfo) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/products/${id}/editproduct`, newProductInfo)
+      dispatch(editProduct(id, newProductInfo))
+    } catch (error) {
+      console.log(`ERROR editing product with id ${id}.`, error)
+    }
+  }
+}
 
 //Reducer
 
@@ -53,6 +70,8 @@ const productsReducer = (state = defaultProducts, action) => {
       return action.products
     case CREATE_PRODUCT:
       return [...state, action.newProduct]
+    case EDIT_PRODUCT:
+      return [...state, action.newProductInfo]
     default:
       return state
   }

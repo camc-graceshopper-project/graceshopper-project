@@ -59,3 +59,15 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/:id/editproduct', isAdmin, async (req, res, next) => {
+  try {
+    console.log(req.params.id)
+    const product = await Product.findByPk(req.params.id)
+
+    const editedProdcut = await product.update(req.body)
+    res.json(editedProdcut)
+  } catch (error) {
+    next(error)
+  }
+})

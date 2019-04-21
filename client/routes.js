@@ -13,6 +13,7 @@ import CreateNewProductForm from './components/CreateNewProductForm'
 import {fetchCart} from './store/cart'
 import {fetchCategories} from './store/categories'
 import AddCategoryForm from './components/AddCategoryForm'
+import AdminPanel from './components/AdminPanel'
 
 /**
  * COMPONENT
@@ -31,26 +32,28 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/products/:id" component={SingleProduct} />
-        <Route path="/all-products/:page" component={AllProducts} />
+        <Route exact path="/all-products/:page" component={AllProducts} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path ="/cart" component={Cart} />
+        <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/home" component={UserHome} />
             <Route exact path="/orders/:orderId" component={SingleOrder} />
             <Route
               exact
               path="/orders/:orderId/changeStatus"
               component={ChangeStatusForm}
             />
+            <Route exact path="/adminpanel" component={AdminPanel} Route />
             <Route
               exact
-              path="/orders/:orderId/changeStatus"
-              component={ChangeStatusForm}
+              path="/adminpanel/postproduct"
+              component={CreateNewProductForm}
+              Route
             />
-            <Route path="/orders" component={AllOrders} />
+            <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
           </Switch>
         )}

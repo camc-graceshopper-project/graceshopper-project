@@ -37,7 +37,7 @@ export const fetchProducts = (categories = []) => {
 export const addNewProduct = newProduct => {
   return async dispatch => {
     try {
-      const {data} = await axios.post(`/api/products`, newProduct)
+      const {data} = await axios.post(`/api/adminpanel/postproduct`, newProduct)
       dispatch(createNewProduct(data))
     } catch (error) {
       console.log(error)

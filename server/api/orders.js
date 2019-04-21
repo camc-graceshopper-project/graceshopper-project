@@ -2,6 +2,11 @@ const router = require('express').Router()
 const {Order} = require('../db/models')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
+const keySecret = process.env.STRIKE_KEY
+const Stripe = require('stripe')(keySecret);
+
+// necessary? unsure.
+router.set("view engine", "pug")
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
@@ -29,6 +34,15 @@ router.post('/', async (req, res, next) => {
     // if no userId make email null i guess
     
     
+    
+    const charge = await Stripe.charges.create({
+      amount: '',
+      currency: 'usd',
+      description: '',
+      source: token
+    })
+    
+    res.render("charge.pug")
     
     
   } catch (err) {

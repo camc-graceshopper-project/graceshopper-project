@@ -1,30 +1,49 @@
-import React from 'react';
-import connect from 'react-redux'
+import React from 'react'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
-const CheckoutPage = function() {
+
+class CheckoutPage extends React.Component {
   
   
   
-  return (
-    <div>
-      test
-    </div>
-  )
+  render() {
+    const products = this.props.cart
+    
+    
+    return (
+      <div>
+        
+        {products.map(product => {
+          return (
+            
+            <div key={product.id}>
+              <Link to={`/products/${product.id}`}>
+                {product.name}
+                <img src={product.image} />
+              </Link>
+              
+            </div>
+            
+          )
+        })}
+        
+        
+      </div>
+    )
+  }
 }
 
+const mapStateToProps = state => {
+  return {
+    cart: state.cart
+  }
+}
 
-// const mapState = state => {
+// const mapDispatchToProps = dispatch => {
 //   return {
-//     orders: state.orders,
+//     fetchProducts: () => dispatch(fetchProducts())
 //   }
 // }
 
-// const mapDispatch = dispatch => {
-//   return {
-//     fetchOrders: () => dispatch(fetchOrders()),
-//     statusOrders: (orderStatus) => dispatch(statusOrders(orderStatus))
-//   }
-// }
-
-// export default connect(mapState, mapDispatch)(CheckoutPage)
-export default CheckoutPage
+export default connect(mapStateToProps)(CheckoutPage)

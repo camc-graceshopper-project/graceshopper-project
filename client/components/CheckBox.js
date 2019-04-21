@@ -32,7 +32,7 @@ class Checkbox extends React.Component {
       })
       await this.setState({checkedCats: newState})
     }
-    this.props.fetchProducts(this.state.checkedCats)
+    this.props.fetchProducts(this.props.match.params.page, this.state.checkedCats)
   }
   
   render() {
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
-    fetchProducts: (categories) => dispatch(fetchProducts(categories))
+    fetchProducts: (page, categories) => dispatch(fetchProducts(page, categories))
   }
 }
 

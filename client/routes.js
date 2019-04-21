@@ -8,9 +8,10 @@ import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
-import {fetchCart} from './store/cart' 
+import {fetchCart} from './store/cart'
 import ChangeStatusForm from './components/ChangeStatusForm'
 import AddCategoryForm from './components/AddCategoryForm'
+import MakeUserAdminForm from './components/MakeUserAdmin';
 
 
 /**
@@ -40,7 +41,7 @@ class Routes extends Component {
             <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
             <Route path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
-
+            <Route exact path="/make-user-admin" component={MakeUserAdminForm} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

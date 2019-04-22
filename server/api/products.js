@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product, Category, Review, User} = require('../db/models')
+const {Product, Category, Review, User, CategoryProduct} = require('../db/models')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
@@ -79,6 +79,46 @@ router.put('/:id/editproduct', isAdmin, async (req, res, next) => {
   }
 })
 
+
+router.post('/:id/editproduct/addCategory', isAdmin, async (req, res, next) => {
+  try{
+
+   const category = await Category.findOne({
+    where: {
+      name: req.body.category
+    }
+  })
+    const newCategory = await CategoryProduct.create({
+      productId: req.params.id,
+      categoryId: category.id
+    })
+    res.json(newCategory)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:id/editproduct/removeCategory', isAdmin, async (req, res, next) => {
+  try {
+
+      const category = await Category.findOne({
+        where: {
+          name: req.body.category
+        }
+      })
+      const removed = await CategoryProduct.destroy({
+        where: {
+          productId: req.params.id,
+          categoryId: category.dataValues.id
+        }
+      })
+      res.status(200).send('Successfully Removed!')
+  } catch (err) {
+    next (err)
+  }
+})
+
+
 router.post('/:id/postreview', isAdminOrIsUser, async (req, res, next) => {
   try {
     const review = await Review.create(req.body)
@@ -93,3 +133,4 @@ router.post('/:id/postreview', isAdminOrIsUser, async (req, res, next) => {
     next(error)
   }
 })
+

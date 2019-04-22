@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {editOneProduct} from '../store/products'
+import {Link} from 'react-router-dom'
 
 export class EditProductForm extends React.Component {
   constructor(props) {
@@ -86,7 +87,12 @@ export class EditProductForm extends React.Component {
             onChange={this.handleChange}
           />
         </div>
+
         <br />
+           <Link to='editproduct/addRemoveCategory'>Add/Remove Product Category</Link>
+        <br />
+        <br />
+
         <button type="submit">Submit</button>
       </form>
     )

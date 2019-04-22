@@ -12,17 +12,17 @@ class AllProducts extends React.Component {
     super()
     this.handleClick = this.handleClick.bind(this);
   }
-  
+
   componentDidMount() {
     this.props.fetchProducts(this.props.match.params.page, this.props.filterCategories)
   }
-  
+
   async handleClick(newPage) {
-    
+
     await this.props.history.push(newPage)
     this.props.fetchProducts(this.props.match.params.page, this.props.filterCategories);
   }
-  
+
   render() {
 
     const thisPage = Number(this.props.match.params.page);

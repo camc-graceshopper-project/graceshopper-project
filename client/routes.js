@@ -15,6 +15,7 @@ import {fetchCart} from './store/cart'
 import {fetchCategories} from './store/categories'
 import AddCategoryForm from './components/AddCategoryForm'
 import AdminPanel from './components/AdminPanel'
+import CreateReviewForm from './components/CreateReviewForm'
 
 /**
  * COMPONENT
@@ -47,18 +48,21 @@ class Routes extends Component {
               path="/orders/:orderId/changeStatus"
               component={ChangeStatusForm}
             />
-            <Route exact path="/adminpanel" component={AdminPanel} Route />
+            <Route exact path="/adminpanel" component={AdminPanel} />
             <Route
               exact
               path="/adminpanel/postproduct"
               component={CreateNewProductForm}
-              Route
             />
             <Route
               exact
               path="/products/:productId/editproduct"
               component={EditProductForm}
-              Route
+            />
+            <Route
+              exact
+              path="/products/:id/postreview"
+              component={CreateReviewForm}
             />
             <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />

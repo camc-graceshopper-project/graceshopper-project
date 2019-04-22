@@ -41,12 +41,12 @@ class AllProducts extends React.Component {
               <div className="buttons">
                 {thisPage > 1 &&
                   <Link to={`/all-products/${thisPage - 1}`}>
-                    <button type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
+                    <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
                   </Link>
                 }
 
                 <Link to={`/all-products/${thisPage + 1}`}>
-                  <button type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
+                  <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
                 </Link>
               </div>
             </div>
@@ -70,8 +70,8 @@ class AllProducts extends React.Component {
                           </Link>
                           
                           <div className="product-details">
-                          <Link className="product-name" to={`/products/${product.id}`}>
-                            {product.name}
+                          <Link  to={`/products/${product.id}`}>
+                            <span className="product-name">{product.name}</span>
                           </Link>
                           
                           <AddToCartButtonAllProducts product={product} />
@@ -89,12 +89,12 @@ class AllProducts extends React.Component {
               <div className="buttons">
                 {thisPage > 1 &&
                   <Link to={`/all-products/${thisPage - 1}`}>
-                    <button type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
+                    <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
                   </Link>
                 }
 
                 <Link to={`/all-products/${thisPage + 1}`}>
-                  <button type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
+                  <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
                 </Link>
               </div>
             </div>

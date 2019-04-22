@@ -15,9 +15,9 @@ const AddToCartButtonAllProducts = function(props) {
   }
   
   return (
-    <div>
-      <form onClick={handleSubmit}>
-        <button type="submit">
+    <div >
+      <form  onClick={handleSubmit}>
+        <button className='cart-button' type="submit">
           Add To Cart
         </button>
       </form>

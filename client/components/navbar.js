@@ -4,9 +4,11 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
+import './navbar.css'
+
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>It's International Candy! :3</h1>
+  <div id="navbar">
+    <h1>Worldwide Candy Market</h1>
     <nav>
       {isLoggedIn ? (
         <div>

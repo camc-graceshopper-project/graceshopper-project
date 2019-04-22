@@ -13,13 +13,13 @@ class AllProducts extends React.Component {
   }
   
   componentDidMount() {
-    this.props.fetchProducts(this.props.match.params.page)
+    this.props.fetchProducts(this.props.match.params.page, this.props.filterCategories)
   }
   
   async handleClick(newPage) {
     
     await this.props.history.push(newPage)
-    this.props.fetchProducts(this.props.match.params.page);
+    this.props.fetchProducts(this.props.match.params.page, this.props.filterCategories);
   }
   
   render() {
@@ -88,13 +88,14 @@ class AllProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     products: state.products,
-    user: state.user
+    user: state.user,
+    filterCategories: state.filterCategories
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: (page) => dispatch(fetchProducts(page))
+    fetchProducts: (page, categories) => dispatch(fetchProducts(page, categories))
   }
 }
 

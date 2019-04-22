@@ -2,42 +2,40 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCategories} from '../store/categories'
 import {fetchProducts} from '../store/products'
+import {addFilterToStore, removeFilterFromStore, updateFiltersOnStore} from '../store/filterCategories'
 
 
 class Checkbox extends React.Component {
   constructor() {
     super()
-    this.state = {
-      checkedCats: []
-    }
     
     this.handleClick = this.handleClick.bind(this)
   }
   
   componentDidMount() {
     this.props.fetchCategories()
+    console.log(this.props);
   }
   
   async handleClick(event) {
     if (event.target.checked) {
-      let currentState = this.state.checkedCats;
-      currentState.push(event.target.value);
-      this.setState({checkedCats: currentState})
+      let currentCategories = this.props.filterCategories;
+      currentCategories.push(event.target.value);
+      this.props.updateFiltersOnStore(currentCategories);
 
       
     } else {
-      let oldState = this.state.checkedCats;
-      let newState = oldState.filter((cat) => {
+      let oldFilters = this.props.filterCategories;
+      let newFilters = oldFilters.filter((cat) => {
         return cat !== event.target.value
       })
-      await this.setState({checkedCats: newState})
+      await this.props.updateFiltersOnStore(newFilters);
     }
     let path = window.location.pathname;
     let splitPath = path.split('/');
     let page = splitPath[splitPath.length-1]
-    console.log(page);
     
-    this.props.fetchProducts(page, this.state.checkedCats)
+    this.props.fetchProducts(page, this.props.filterCategories)
   }
   
   render() {
@@ -60,14 +58,16 @@ class Checkbox extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    filterCategories: state.filterCategories
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
-    fetchProducts: (page, categories) => dispatch(fetchProducts(page, categories))
+    fetchProducts: (page, categories) => dispatch(fetchProducts(page, categories)),
+    updateFiltersOnStore: (filtersList) => dispatch(updateFiltersOnStore(filtersList))
   }
 }
 

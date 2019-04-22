@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { fetchProducts } from '../store/products'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {fetchProducts} from '../store/products'
 import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
+import CreateNewProductForm from './CreateNewProductForm'
 import CheckBox from './CheckBox'
 
 class AllProducts extends React.Component {
@@ -23,11 +24,11 @@ class AllProducts extends React.Component {
   }
   
   render() {
+
     const thisPage = Number(this.props.match.params.page);
     const products = this.props.products
     return (
       <div>
-
         <div>
           <CheckBox />
         </div>
@@ -81,7 +82,6 @@ class AllProducts extends React.Component {
 
       </div>
     )
-
   }
 }
 

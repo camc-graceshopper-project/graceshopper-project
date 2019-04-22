@@ -31,7 +31,6 @@ export const fetchSingleOrder = orderId => async dispatch => {
 export const updateOneOrder = (id, orderUpdates) => {
   return async dispatch => {
     try {
-      console.log('ORDER-UPDATES', orderUpdates)
       await axios.put(`/api/orders/${id}`, {status: orderUpdates})
       dispatch(updateSingleOrder(id, orderUpdates))
     } catch (error) {
@@ -45,7 +44,7 @@ const singleOrderReducer = (state = defaultOrder, action) => {
     case GET_SINGLE_ORDER:
       return action.singleOrder
     case UPDATE_SINGLE_ORDER:
-        return {...state, status: action.orderUpdates}
+      return {...state, status: action.orderUpdates}
     default:
       return state
   }

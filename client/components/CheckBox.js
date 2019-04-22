@@ -1,29 +1,30 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {fetchCategories} from '../store/categories'
-import {fetchProducts} from '../store/products'
-import {addFilterToStore, removeFilterFromStore, updateFiltersOnStore} from '../store/filterCategories'
+import { connect } from 'react-redux'
+import { fetchCategories } from '../store/categories'
+import { fetchProducts } from '../store/products'
+import { addFilterToStore, removeFilterFromStore, updateFiltersOnStore } from '../store/filterCategories'
 
+import './CheckBox.css'
 
 class Checkbox extends React.Component {
   constructor() {
     super()
-    
+
     this.handleClick = this.handleClick.bind(this)
   }
-  
+
   componentDidMount() {
     this.props.fetchCategories()
     console.log(this.props);
   }
-  
+
   async handleClick(event) {
     if (event.target.checked) {
       let currentCategories = this.props.filterCategories;
       currentCategories.push(event.target.value);
       this.props.updateFiltersOnStore(currentCategories);
 
-      
+
     } else {
       let oldFilters = this.props.filterCategories;
       let newFilters = oldFilters.filter((cat) => {
@@ -33,24 +34,28 @@ class Checkbox extends React.Component {
     }
     let path = window.location.pathname;
     let splitPath = path.split('/');
-    let page = splitPath[splitPath.length-1]
-    
+    let page = splitPath[splitPath.length - 1]
+
     this.props.fetchProducts(page, this.props.filterCategories)
   }
-  
+
   render() {
     let categories = this.props.categories
-    
+
     return (
+
       <div>
-        {categories.map((category) => {
-          return (
-            <div key={category.id}>
-              <input type="checkbox" onClick={this.handleClick} value={category.name} />
-              <h5>{category.name}</h5>
-            </div>
-          )
-        })}
+          {categories.map((category) => {
+            return (
+
+              <div className="category-box" key={category.id}>
+                  <input type="checkbox" onClick={this.handleClick} value={category.name} />
+                  <h5>{category.name}</h5>
+              </div>
+
+
+            )
+          })}
       </div>
     )
   }

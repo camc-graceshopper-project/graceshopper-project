@@ -1,0 +1,6 @@
+.category-box{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  align-items: center;
+}

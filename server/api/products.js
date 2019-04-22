@@ -5,12 +5,16 @@ const Op = Sequelize.Op
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/all/:page', async (req, res, next) => {
   try {
     const categories = req.query.categories
 
-    //console.log(categories)
+    const page = req.params.page
+
+    let pageSize = 10
+
     let products
+
     if (categories) {
       // format categories into array of objecs
       // as this is the structure sequel takes the options in
@@ -32,7 +36,8 @@ router.get('/', async (req, res, next) => {
             [Op.gte]: 1
           }
         },
-        limit: 10
+        offset: pageSize * (page - 1),
+        limit: pageSize
       })
     } else {
       products = await Product.findAll({
@@ -41,7 +46,8 @@ router.get('/', async (req, res, next) => {
             [Op.gte]: 1
           }
         },
-        limit: 10
+        offset: pageSize * (page - 1),
+        limit: pageSize
       })
     }
 

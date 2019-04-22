@@ -7,7 +7,6 @@ const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const defaultSingleProduct = {}
 
 //Action Creator
-
 const getSingleProduct = product => {
   return {
     type: GET_SINGLE_PRODUCT,
@@ -24,7 +23,6 @@ export const fetchSingleProduct = id => {
 }
 
 //Reducer
-
 const singleProductReducer = (state = defaultSingleProduct, action) => {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:

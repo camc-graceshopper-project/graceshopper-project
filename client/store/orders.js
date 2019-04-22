@@ -1,11 +1,13 @@
 import axios from 'axios'
-
+import { Stripe } from 'stripe'
+const stripe = Stripe('pk_test_UE56Dh7aaO5b2AR5HuvEQBfS00URoSGOiy')
 
 /**
  * ACTION TYPES
  */
 const GET_ORDERS = 'GET_ORDERS'
 const FILTER_ORDER_STATUS = 'FILTER_ORDER_STATUS'
+const CREATE_ORDER = 'CREATE_ORDER'
 
 /**
  * INITIAL STATE
@@ -34,39 +36,50 @@ const filterOrders = (statusOrders) => {
     }
 }
 
- /**
- * THUNK CREATORS
- */
+const orderCreated = () => {
+    return {
+        type: CREATE_ORDER
+    }
+}
+
+/**
+* THUNK CREATORS
+*/
 
 export const fetchOrders = () => {
-
     return async (dispatch) => {
-        const {data} = await axios.get('/api/orders')
+        const { data } = await axios.get('/api/orders')
         dispatch(getOrders(data))
-
     }
 }
 
 export const statusOrders = (orderStatus) => {
-
     return async (dispatch) => {
-        const {data} = await axios.get(`/api/orders/status/${orderStatus}`)
+        const { data } = await axios.get(`/api/orders/status/${orderStatus}`)
         dispatch(filterOrders(data))
-
     }
 }
 
- /**
- * REDUCER
- */
+export const createOrder = (order) => {
+    return async (dispatch) => {
+        
+        
+        
+    }
+}
 
- export default function(state = initialState, action) {
-     switch(action.type){
-         case GET_ORDERS:
+
+/**
+* REDUCER
+*/
+
+export default function (state = initialState, action) {
+    switch (action.type) {
+        case GET_ORDERS:
             return action.orders
         case FILTER_ORDER_STATUS:
             return action.statusOrders
         default:
             return state
-     }
- }
+    }
+}

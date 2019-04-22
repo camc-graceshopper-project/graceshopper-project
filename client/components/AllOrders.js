@@ -11,7 +11,6 @@ class AllOrders extends React.Component {
     }
 
     statusChange = (event) => {
-
       this.props.statusOrders(event.target.value)
 
     }
@@ -27,7 +26,6 @@ class AllOrders extends React.Component {
               <option value='Processing'>Processing</option>
               <option value='Completed'>Completed</option>
               <option value='Cancelled'>Cancelled</option>
-
             </select>
             <div>
               <ol>

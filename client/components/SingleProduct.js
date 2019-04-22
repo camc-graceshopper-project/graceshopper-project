@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/singleProduct'
 import AddToCartButtonSingleProduct from './AddToCartButtonSingleProduct'
+import Reviews from './Reviews'
 import {Link} from 'react-router-dom'
 
 class SingleProduct extends React.Component {
@@ -24,12 +25,10 @@ class SingleProduct extends React.Component {
               {this.props.singleProduct.description}
             </p>
             <AddToCartButtonSingleProduct product={this.props.singleProduct} />
-            <Link
-              to={`/products/${this.props.singleProduct.id}/editproduct`}
-              propduct={this.props.singleProduct}
-            >
+            <Link to={`/products/${this.props.singleProduct.id}/editproduct`}>
               <button type="button">Edit Product</button>
             </Link>
+            <Reviews singleProduct={this.props.singleProduct} />
           </div>
         ) : (
           <div>Currently unavailable.</div>

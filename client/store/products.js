@@ -17,10 +17,11 @@ const getProducts = products => {
 
 //Thunk Creator
 
-export const fetchProducts = (categories = []) => {
+export const fetchProducts = (page, categories = []) => {
   return async dispatch => {
     try {
-      const res = await axios.get('/api/products', {params: 
+      
+      const res = await axios.get(`/api/products/all/${page}`, {params: 
         {categories: categories}
       })
       dispatch(getProducts(res.data || defaultProducts))

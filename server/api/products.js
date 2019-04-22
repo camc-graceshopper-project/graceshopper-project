@@ -4,9 +4,12 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/all/:page', async (req, res, next) => {
   try {
     const categories = req.query.categories
+    const page = req.params.page
+    
+    let pageSize = 10;
     
     console.log(categories);
     let products;
@@ -30,7 +33,8 @@ router.get('/', async (req, res, next) => {
             [Op.gte]: 1
           },
         },
-        limit: 10,
+        offset: pageSize * (page - 1),
+        limit: pageSize,
       })
       
 
@@ -42,7 +46,8 @@ router.get('/', async (req, res, next) => {
             [Op.gte]: 1
           },
         },
-        limit: 10,
+        offset: pageSize * (page - 1),
+        limit: pageSize,
       })
     }
 

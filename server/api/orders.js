@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const router = require('express').Router()
 const {Order} = require('../db/models')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
@@ -5,8 +6,6 @@ module.exports = router
 const keySecret = process.env.STRIKE_KEY
 const Stripe = require('stripe')(keySecret);
 
-// necessary? unsure.
-router.set("view engine", "pug")
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
@@ -34,16 +33,22 @@ router.post('/', async (req, res, next) => {
     // if no userId make email null i guess
     
     
-    
-    const charge = await Stripe.charges.create({
-      amount: '',
-      currency: 'usd',
-      description: '',
-      source: token
+    const charge = await Stripe.checkout.sessions.create({
+      success_url: '',
+      cancel_url: '',
+      payment_method_types: ['card'],
+      line_items: [{
+        // fill this in
+        amount: 500,
+        currency: 'usd',
+        // fill this in
+        name: 'T-shirt',
+        // fill this in
+        description: 'Comfortable cotton t-shirt',
+      }]
     })
     
-    res.render("charge.pug")
-    
+    res.json('hello');
     
   } catch (err) {
     next(err)

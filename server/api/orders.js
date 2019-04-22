@@ -31,11 +31,27 @@ router.get('/:orderId', isAdmin, async (req, res, next) => {
 router.put('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
-      where: {id: req.params.orderId}
+      where: {
+        id: req.params.orderId
+      }
     })
 
     const updatedOrder = await order.update(req.body)
-    res.json(updatedOrder)
+    let email = {
+      from:
+        'Mailgun Sandbox <postmaster@sandbox51ac6892196a4c74839719aab3fc4eed.mailgun.org>',
+      to: `Christa Kaspo <christa.kaspo@gmail.com>`,
+      subject: `Order Status Update`,
+      text: `Hello ${req.user.email}, your order is ${updatedOrder.status}.`
+    }
+    mailgun.messages().send(email, function(error, body) {
+      if (error) {
+        console.log(error)
+      }
+      console.log(body)
+      res.json(updatedOrder)
+    })
+    // res.json(updatedOrder)
   } catch (error) {
     next(error)
   }
@@ -45,24 +61,10 @@ router.get('/status/:status', async (req, res, next) => {
   try {
     const statusOrders = await Order.findAll({
       where: {
-        status: req.params.status,
-        userid: req.user.id
+        status: req.params.status
       }
     })
-    let email = {
-      from:
-        'Mailgun Sandbox <postmaster@sandbox51ac6892196a4c74839719aab3fc4eed.mailgun.org>',
-      to: req.user.email,
-      subject: `${req.params.status}`,
-      text: `Hello ${req.user.name}, your order is ${req.params.status}.`
-    }
-    mailgun.messages().send(email, function(error, body) {
-      if (error) {
-        console.log(error)
-      }
-      console.log(body)
-      res.json(statusOrders)
-    })
+    res.json(statusOrders)
   } catch (error) {
     next(error)
   }

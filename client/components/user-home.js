@@ -12,7 +12,6 @@ export const UserHome = props => {
   return (
     <div>
       <h3>Welcome, {email}</h3>
-      <Link to='/make-user-admin'>Make User An Admin</Link>
     </div>
   )
 }

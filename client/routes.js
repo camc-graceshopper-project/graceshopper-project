@@ -17,6 +17,7 @@ import AddCategoryForm from './components/AddCategoryForm'
 import MakeUserAdminForm from './components/MakeUserAdmin';
 
 import AdminPanel from './components/AdminPanel'
+import { AddRemoveCategoryForm } from './components/AddRemoveProductCategoryForm';
 
 /**
  * COMPONENT
@@ -65,6 +66,11 @@ class Routes extends Component {
             <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
             <Route exact path="/make-user-admin" component={MakeUserAdminForm} />
+            <Route
+              exact
+              path="/products/:productId/editproduct/addRemoveCategory"
+              component={AddRemoveCategoryForm}
+            />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

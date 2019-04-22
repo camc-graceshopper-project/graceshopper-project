@@ -2,17 +2,21 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup, UserHome, Cart} from './components'
 import {me} from './store'
 import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
-import {fetchCart} from './store/cart'
 import ChangeStatusForm from './components/ChangeStatusForm'
+import CreateNewProductForm from './components/CreateNewProductForm'
+import EditProductForm from './components/EditProductForm'
+import {fetchCart} from './store/cart'
+import {fetchCategories} from './store/categories'
 import AddCategoryForm from './components/AddCategoryForm'
 import MakeUserAdminForm from './components/MakeUserAdmin';
 
+import AdminPanel from './components/AdminPanel'
 
 /**
  * COMPONENT
@@ -20,6 +24,7 @@ import MakeUserAdminForm from './components/MakeUserAdmin';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchCategories()
     this.props.fetchCart()
   }
 
@@ -30,16 +35,34 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/products/:id" component={SingleProduct} />
-        <Route path="/all-products/:page" component={AllProducts} />
+        <Route exact path="/all-products/:page" component={AllProducts} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/home" component={UserHome} />
             <Route exact path="/orders/:orderId" component={SingleOrder} />
-            <Route exact path="/orders/:orderId/changeStatus" component={ChangeStatusForm} />
-            <Route path="/orders" component={AllOrders} />
+            <Route
+              exact
+              path="/orders/:orderId/changeStatus"
+              component={ChangeStatusForm}
+            />
+            <Route exact path="/adminpanel" component={AdminPanel} Route />
+            <Route
+              exact
+              path="/adminpanel/postproduct"
+              component={CreateNewProductForm}
+              Route
+            />
+            <Route
+              exact
+              path="/products/:productId/editproduct"
+              component={EditProductForm}
+              Route
+            />
+            <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
             <Route exact path="/make-user-admin" component={MakeUserAdminForm} />
           </Switch>
@@ -67,6 +90,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
+    fetchCategories: () => dispatch(fetchCategories()),
     fetchCart: () => dispatch(fetchCart())
   }
 }

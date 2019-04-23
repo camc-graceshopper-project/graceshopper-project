@@ -12,11 +12,11 @@ export const UserHome = props => {
     <div>
       <h3>Welcome, {email}</h3>
       <Link to={`/users/${id}/orderhistory`}>
-        <button type="button">Order History</button>
+        <button type="button">View Order History</button>
       </Link>
-
+      <br />
       <Link to="/cart">
-        <button type="button">Order History</button>
+        <button type="button">Go to cart</button>
       </Link>
     </div>
   )

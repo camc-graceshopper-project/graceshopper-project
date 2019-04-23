@@ -6,6 +6,9 @@ import {auth} from '../store'
 /**
  * COMPONENT
  */
+
+ import './auth-form.css'
+ 
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
@@ -29,7 +32,7 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a className="google-auth-link" href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }

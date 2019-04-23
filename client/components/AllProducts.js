@@ -6,9 +6,10 @@ import {fetchProducts} from '../store/products'
 import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
 import CreateNewProductForm from './CreateNewProductForm'
 import CheckBox from './CheckBox'
+import SearchBar from './ProductSearchBar'
 import { Card } from 'react-bootstrap'
 
-import './AllProducts.css'
+//import './AllProducts.css'
 
 class AllProducts extends React.Component {
   constructor() {
@@ -31,6 +32,13 @@ class AllProducts extends React.Component {
     const thisPage = Number(this.props.match.params.page);
     const products = this.props.products
     return (
+      <div>
+        <div>
+          <SearchBar />
+        </div>
+        <div>
+          <CheckBox />
+        </div>
       <div id="all-products">
         <div id="page-container">
 
@@ -62,23 +70,23 @@ class AllProducts extends React.Component {
                   <br />
                   {products.map(product => {
                     return (
-                      
+
                       <div key={product.id}>
-                      
+
                         <div className="product-card">
                           <Link to={`/products/${product.id}`}>
                             <img className="product-image" src={product.image} />
                           </Link>
-                          
+
                           <div className="product-details">
                           <Link  to={`/products/${product.id}`}>
                             <span className="product-name">{product.name}</span>
                           </Link>
-                          
+
                           <AddToCartButtonAllProducts product={product} />
                           </div>
                         </div>
-                        
+
                       </div>
 
                     )
@@ -102,7 +110,7 @@ class AllProducts extends React.Component {
 
           </div>
         </div>
-
+        </div>
       </div>
     )
   }

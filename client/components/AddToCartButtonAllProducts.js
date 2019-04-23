@@ -3,17 +3,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addToCart} from '../store/cart'
 
-import './AddToCartButtonAllProducts.css'
+//import './AddToCartButtonAllProducts.css'
 
 const AddToCartButtonAllProducts = function(props) {
   let product = props.product;
   product.cart = {quantity: 1}
-  
+
   const handleSubmit = function(event) {
     event.preventDefault();
     props.addToCart(product);
   }
-  
+
   return (
     <div >
       <form  onClick={handleSubmit}>

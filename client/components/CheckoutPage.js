@@ -9,6 +9,10 @@ class CheckoutPage extends React.Component {
   
   render() {
     const products = this.props.cart
+    let total = 0;
+    products.forEach((item) => {
+      total = total + (item.cart.quantity * item.price*100)
+    })
     
     
     return (
@@ -28,7 +32,7 @@ class CheckoutPage extends React.Component {
           )
         })}
         
-        <TakeMoney />
+        <TakeMoney amount={total}/>
         
       </div>
     )

@@ -21,9 +21,11 @@ router.post('/save-stripe-token', async (req, res, next) => {
   
   console.log('===========')
   
+  const amount = req.body.amount;
+  
   const token = req.body.token.id;
   const charge = await Stripe.charges.create({
-    amount: 500,
+    amount: amount,
     currency: 'usd',
     description: 'Example charge',
     source: token
@@ -116,46 +118,47 @@ router.get('/status/:status', async (req, res, next) => {
 
 
 router.post('/', async (req, res, next) => {
-  
+  try{
   // check to see if i can get info from the checkout thingy
-  console.log(req.body.charge);
-  const email = req.body.charge.email;
-  
+  const email = req.body.email;
+  const amount = req.body.charge;
   
   let cart;
   if (req.user.id) {
-    let myUser = User.findByPk(req.user.id)
-    cart = myUser.getProducts();
+    let myUser = await User.findByPk(req.user.id)
+    cart = await myUser.getProducts();
     // idk if this works. it SHOULD empty cart in database
-    myUser.setProducts([]);
+    await myUser.setProducts([]);
   } else {
     cart = req.session.cart;
     req.session.cart = [];
   }
   
-  let sum = 0;
-  cart.forEach((item) => {
-    sum = sum + (item.cart.quantity * item.price)
-  }) 
   
-  // might have to declare userid not required on assocation
+  let orderUserId = req.user.id || null;
   const newOrder = {
-    totalPrice: sum
+    totalPrice: amount,
+    status: 'Created',
+    email,
+    userId: orderUserId
   }
   
-  const order = Order.create(newOrder);
+  const order = await Order.create(newOrder);
+  
   
   
   cart.forEach((item) => {
     let newAssociation = {
-      quantity: item.order.quantity,
-      price: item.cart.price,
+      quantity: item.cart.quantity,
+      price: item.price,
       orderId: order.id,
       productId: item.id
     }
     OrderProduct.create(newAssociation)
   })
   
-  res.json('testtttt');
-  
+  res.json('order made succesfully');
+} catch (err) {
+  next(err);
+}
 })

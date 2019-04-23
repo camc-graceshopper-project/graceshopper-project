@@ -69,11 +69,12 @@ export const statusOrders = (orderStatus) => {
 // }
 
 
-export const completeCheckout = (charge) => {
+export const completeCheckout = (charge, email) => {
     return async (dispatch) => {
         
         const orderCreationResponse = await axios.post('/api/orders', {
-            charge
+            charge,
+            email
         })
         
         // fetch cart again cuz its empty now

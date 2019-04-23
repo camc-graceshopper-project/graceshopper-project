@@ -1,35 +1,30 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
-// import {completeCheckout} from '../store/orders'
+import {completeCheckout} from '../store/orders'
+import {connect} from 'react-redux'
 
 
-export default class TakeMoney extends React.Component {
+export class TakeMoney extends React.Component {
   
   onToken = async (token) => {
+    
+    let amount = this.props.amount;
+    
     const stripeResponse = await axios.post('/api/orders/save-stripe-token', {
-      amount: 500,
+      amount: amount,
       token
     });
-    console.log(stripeResponse);
-    // const data = stripeResponse.json();
-    // ? idk
+
+    const transactionInfo = stripeResponse.data;
+    const email = transactionInfo.billing_details.name;
+    const transactionAmount = transactionInfo.amount;
     
-    // fetch('/save-stripe-token', {
-    //   method: 'POST',
-    //   body: JSON.stringify(token),
-    // }).then(response => {
-    //   response.json().then(data => {
-    //     alert(`We are in business, ${data.email}`);
-    //   });
-    // });
-    
-    
-    //this.props.completeCheckout();
+    this.props.completeCheckout(transactionAmount, email);
     
   }
-
-
+  
+  
   render() {
     return (
       // ...
@@ -42,11 +37,11 @@ export default class TakeMoney extends React.Component {
 }
 
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     completeCheckout: () => dispatch(completeCheckout())
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    completeCheckout: (amount, email) => dispatch(completeCheckout(amount, email))
+  }
+}
 
-// export default connect(null, mapDispatchToProps)(TakeMoney)
+export default connect(null, mapDispatchToProps)(TakeMoney)
 

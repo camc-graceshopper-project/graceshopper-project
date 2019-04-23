@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Review} = require('../db/models')
+const {User, Review, Order} = require('../db/models')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
 
@@ -18,6 +18,18 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
+router.get('/:id/orderhistory', isAdminOrIsUser, async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: {id: req.params.id},
+      include: [Order]
+    })
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.delete('/:userId', isAdmin, (req, res, next) => {
   try {
     User.destroy({
@@ -31,20 +43,22 @@ router.delete('/:userId', isAdmin, (req, res, next) => {
 })
 
 router.put('/makeAdmin', isAdmin, async (req, res, next) => {
-
-  try{
-
+  try {
     const user = await User.findOne({
       where: {
         email: req.body.email
       }
     })
-    const makeUserAdmin = await user.update({isAdmin: true}, {where: {
-      isAdmin:false
-    }})
+    const makeUserAdmin = await user.update(
+      {isAdmin: true},
+      {
+        where: {
+          isAdmin: false
+        }
+      }
+    )
     res.json(makeUserAdmin)
   } catch (err) {
     next(err)
   }
 })
-

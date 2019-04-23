@@ -9,6 +9,7 @@
   padding-right: 10px;
   text-align: center;
   margin-top: 18px;
+  border: 1px solid white;
 }
 
 .auth-form-container{

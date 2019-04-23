@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { Stripe } from 'stripe'
-const stripe = Stripe('pk_test_UE56Dh7aaO5b2AR5HuvEQBfS00URoSGOiy')
+
 
 /**
  * ACTION TYPES

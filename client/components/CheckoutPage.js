@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-
+import TakeMoney from './TakeMoney';
 
 class CheckoutPage extends React.Component {
   
@@ -28,6 +28,7 @@ class CheckoutPage extends React.Component {
           )
         })}
         
+        <TakeMoney />
         
       </div>
     )

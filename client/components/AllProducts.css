@@ -23,7 +23,7 @@
 
 .product-card{
   background-color: rgb(179, 179, 230);
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   flex-direction: row;
   padding: 15px;
@@ -65,4 +65,8 @@
   font-weight: bold;
   background-color: darkblue;
   color: white;
+}
+
+#all-products{
+  background-color: rgb(223, 223, 165);
 }

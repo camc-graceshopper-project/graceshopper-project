@@ -29,7 +29,7 @@ class AllProducts extends React.Component {
     const thisPage = Number(this.props.match.params.page);
     const products = this.props.products
     return (
-      <div>
+      <div id="all-products">
         <div id="page-container">
 
           <div id="left-side">

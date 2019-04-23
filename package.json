@@ -37,8 +37,10 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
+    "css-loader": "^2.1.1",
     "express": "^4.16.4",
     "express-session": "^1.15.1",
     "faker": "^4.1.0",
@@ -51,6 +53,7 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
@@ -58,7 +61,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.3.1",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "style-loader": "^0.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

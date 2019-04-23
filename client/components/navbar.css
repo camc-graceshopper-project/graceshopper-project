@@ -1,0 +1,18 @@
+h1{
+  font-weight: bold;
+  padding: 15px;
+}
+
+
+
+#navbar{
+  background-color: rgb(179, 179, 230);
+}
+
+nav>div>a{
+  margin: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(77, 77, 169)
+}

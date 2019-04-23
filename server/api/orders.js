@@ -1,11 +1,16 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
 const {Order, User, Product, OrderProduct} = require('../db/models')
+const Mailgun = require('mailgun-js')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
 const keySecret = process.env.STRIPE_KEY
 const Stripe = require('stripe')(keySecret);
 
+
+var api_key = 'f6db9e78db3473fe581560d3627f7792-3fb021d1-4dd33531'
+var DOMAIN = 'sandbox51ac6892196a4c74839719aab3fc4eed.mailgun.org'
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN})
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
@@ -18,8 +23,6 @@ router.get('/', isAdmin, async (req, res, next) => {
 
 
 router.post('/save-stripe-token', async (req, res, next) => {
-  
-  console.log('===========')
   
   const amount = req.body.amount;
   
@@ -36,47 +39,6 @@ router.post('/save-stripe-token', async (req, res, next) => {
 })
 
 
-
-
-// router.post('/', async (req, res, next) => {
-//   try {
-//     let token = req.body.stripeToken;
-//     let orderItems = req.body.order;
-//     let email = req.body.email;
-//     let userId = req.user.id
-//     if (userId === undefined) {
-//       userId = null;
-//     }
-//     //  might have to turn off required for the association. idk
-//       // if itll work or not well see. (i know its something you can do
-//       // i just dunno if necessary or not)
-      
-//     // format to appropriate thingy.
-//     // if no userId make email null i guess
-    
-    
-//     const charge = await Stripe.checkout.sessions.create({
-//       success_url: '',
-//       cancel_url: '',
-//       payment_method_types: ['card'],
-//       line_items: [{
-//         // fill this in
-//         amount: 500,
-//         currency: 'usd',
-//         // fill this in
-//         name: 'T-shirt',
-//         // fill this in
-//         description: 'Comfortable cotton t-shirt',
-//       }]
-//     })
-    
-//     res.json('hello');
-    
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
 router.get('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -91,26 +53,41 @@ router.get('/:orderId', isAdmin, async (req, res, next) => {
 router.put('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
-      where: {id: req.params.orderId}
+      where: {
+        id: req.params.orderId
+      }
     })
 
     const updatedOrder = await order.update(req.body)
-    // after this line above. send an email to the associated email address with the order. saying that the status has changed to 'x'
-    res.json(updatedOrder)
+    
+    let email = {
+      from:
+        'Mailgun Sandbox <postmaster@sandbox51ac6892196a4c74839719aab3fc4eed.mailgun.org>',
+      to: 'Christa Kaspo <christa.kaspo@gmail.com>',
+      subject: `Order Status Update`,
+      text: `Hello ${req.user.email}, your order is ${updatedOrder.status}.`
+    }
+    mailgun.messages().send(email, function(error, body) {
+      if (error) {
+        console.log(error)
+      }
+      res.json(updatedOrder)
+    })
+    // res.json(updatedOrder)
   } catch (error) {
     next(error)
   }
 })
 
 router.get('/status/:status', async (req, res, next) => {
-  try{
+  try {
     const statusOrders = await Order.findAll({
       where: {
         status: req.params.status
       }
     })
     res.json(statusOrders)
-  }catch(error){
+  } catch (error) {
     next(error)
   }
 })

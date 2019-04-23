@@ -1,0 +1,12 @@
+.category-box{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  align-items: center;
+  height: 30px;
+  background-color: rgb(179, 179, 230);
+  border-radius: 5px;
+  padding: 2px;
+  margin: 6px;
+  padding-right: 10px;
+}

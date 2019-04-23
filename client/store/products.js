@@ -78,7 +78,7 @@ export const getFilteredProducts = (search) => {
     try {
       console.log('SEARCH', search)
       const res = await axios.get(`/api/products/candy/search?search=${search.search}`)
-      dispatch(filteredProducts(res))
+      dispatch(filteredProducts(res.data))
     } catch (err) {
       console.error(err)
     }

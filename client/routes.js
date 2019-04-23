@@ -14,11 +14,12 @@ import EditProductForm from './components/EditProductForm'
 import {fetchCart} from './store/cart'
 import {fetchCategories} from './store/categories'
 import AddCategoryForm from './components/AddCategoryForm'
-import MakeUserAdminForm from './components/MakeUserAdmin';
+import MakeUserAdminForm from './components/MakeUserAdmin'
 
 import AdminPanel from './components/AdminPanel'
-import { AddRemoveCategoryForm } from './components/AddRemoveProductCategoryForm';
+import {AddRemoveCategoryForm} from './components/AddRemoveProductCategoryForm'
 import CreateReviewForm from './components/CreateReviewForm'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT
@@ -46,6 +47,11 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/account" component={UserHome} />
             <Route exact path="/home" component={UserHome} />
+            <Route
+              exact
+              path="/users/:id/orderhistory"
+              component={OrderHistory}
+            />
             <Route exact path="/orders/:orderId" component={SingleOrder} />
             <Route
               exact
@@ -70,7 +76,11 @@ class Routes extends Component {
             />
             <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
-            <Route exact path="/make-user-admin" component={MakeUserAdminForm} />
+            <Route
+              exact
+              path="/make-user-admin"
+              component={MakeUserAdminForm}
+            />
             <Route
               exact
               path="/products/:productId/editproduct/addRemoveCategory"

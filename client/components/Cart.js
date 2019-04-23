@@ -17,14 +17,21 @@ class Cart extends React.Component {
         {products.map(product => {
           return (
             <div key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                {product.name}
-                <img src={product.image} />
-              </Link>
+                        <div className="product-card">
+                          <Link to={`/products/${product.id}`}>
+                            <img className="product-image" src={product.image} />
+                          </Link>
+                          
+                          <div className="product-details">
+                          <Link  to={`/products/${product.id}`}>
+                            <span className="product-name">{product.name}</span>
+                          </Link>
+                          
 
               <ChangeQuantityCart product={product} />
 
               <RemoveButton product={product} />
+              </div></div>
             </div>
           )
         })}

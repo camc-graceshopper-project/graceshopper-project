@@ -1,0 +1,17 @@
+#button-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 150px;
+}
+
+#button-container>button{
+  height: 20px;
+  width: 30px;
+  font-size: 15px;
+  padding-bottom: 20px;
+  font-weight: bold;
+  background-color: darkblue;
+  color: white;
+}

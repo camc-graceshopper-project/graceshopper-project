@@ -58,7 +58,6 @@ class AllProducts extends React.Component {
             ) : (
 
                 <div>
-                  <Link to='/add-category'>Add Category</Link>
                   <br />
                   <br />
                   {products.map(product => {

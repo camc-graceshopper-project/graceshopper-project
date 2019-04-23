@@ -6,6 +6,7 @@ import {fetchProducts} from '../store/products'
 import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
 import CreateNewProductForm from './CreateNewProductForm'
 import CheckBox from './CheckBox'
+import SearchBar from './ProductSearchBar'
 
 class AllProducts extends React.Component {
   constructor(){
@@ -29,6 +30,9 @@ class AllProducts extends React.Component {
     const products = this.props.products
     return (
       <div>
+        <div>
+          <SearchBar />
+        </div>
         <div>
           <CheckBox />
         </div>

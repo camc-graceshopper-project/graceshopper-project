@@ -10,7 +10,7 @@ router.get('/all/:page', async (req, res, next) => {
     const categories = req.query.categories
 
     const page = req.params.page
-    
+
     let pageSize = 10;
 
     let products;
@@ -61,6 +61,24 @@ router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id)
     res.json(product)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/candy/search?', async (req, res, next) => {
+  try{
+    console.log('REQ SEARCH LOWER', req.query.search.toLowerCase())
+    const searchTerm = req.query.search.toLowerCase();
+    const products = await Product.findAll({
+      where: {
+        name: {
+          [Op.iLike]: '%' + searchTerm + '%'
+        }
+      }
+    })
+    console.log('FILTERED SEARCH PRODUCTS', products)
+    res.json(products)
   } catch (err) {
     next(err)
   }

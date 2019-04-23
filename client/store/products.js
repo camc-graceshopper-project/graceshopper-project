@@ -4,6 +4,7 @@ import axios from 'axios'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
+const FILTERED_PRODUCTS = 'FILTERED_PRODUCT'
 
 //Initial State
 const defaultProducts = []
@@ -28,13 +29,21 @@ const editProduct = (id, newProductInfo) => {
     newProductInfo
   }
 }
+
+const filteredProducts = (filtProducts) => {
+  return {
+    type: FILTERED_PRODUCTS,
+    filtProducts
+  }
+}
+
 //Thunk Creator
 
 export const fetchProducts = (page, categories = []) => {
   return async dispatch => {
     try {
-      
-      const res = await axios.get(`/api/products/all/${page}`, {params: 
+
+      const res = await axios.get(`/api/products/all/${page}`, {params:
         {categories: categories}
       })
       dispatch(getProducts(res.data || defaultProducts))
@@ -64,6 +73,19 @@ export const editOneProduct = (id, newProductInfo) => {
   }
 }
 
+export const getFilteredProducts = (search) => {
+  return async dispatch => {
+    try {
+      console.log('SEARCH', search)
+      const res = await axios.get(`/api/products/candy/search?search=${search.search}`)
+      dispatch(filteredProducts(res))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+
 //Reducer
 
 const productsReducer = (state = defaultProducts, action) => {
@@ -74,6 +96,8 @@ const productsReducer = (state = defaultProducts, action) => {
       return [...state, action.newProduct]
     case EDIT_PRODUCT:
       return [...state, action.newProductInfo]
+    case FILTERED_PRODUCTS:
+      return action.filtProducts
     default:
       return state
   }

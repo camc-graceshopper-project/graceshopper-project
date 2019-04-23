@@ -22,7 +22,7 @@ async function seed() {
   try {
     await db.sync({force: true})
     console.log('db synced!')
-    
+
     let fakeUsers = [];
     fakeUsers.push({email: 'cody@email.com', password: '123', isAdmin: true});
     fakeUsers.push({email: 'murphy@email.com', password: '123', isAdmin: false})
@@ -33,7 +33,7 @@ async function seed() {
       userObj.isAdmin = false;
       fakeUsers.push(userObj);
     }
-    
+
     const users = await User.bulkCreate(fakeUsers);
 
 
@@ -106,20 +106,21 @@ async function seed() {
     //       'https://images-na.ssl-images-amazon.com/images/I/A1EMqIfmQKL._SX522_.jpg'
     //   })
     // ])
-    
-    
+
+
     let fakeOrders = [];
     for (let i = 0; i < 500; i++) {
       let orderObj = {};
       orderObj.status = Faker.random.arrayElement(['Created', 'Processing', 'Cancelled', 'Completed'])
       orderObj.totalPrice = Faker.finance.amount(5.00 , 50.00, 2);
       orderObj.userId = Faker.random.number({min: 1, max: 100})
+      orderObj.email = Faker.internet.email();
       fakeOrders.push(orderObj)
     }
     const orders = await Order.bulkCreate(fakeOrders);
 
-    
-    
+
+
     let fakeReviews = [];
     for (let i = 0; i < 850; i++) {
       let reviewObj = {};
@@ -131,11 +132,11 @@ async function seed() {
       fakeReviews.push(reviewObj);
     }
     const reviews = await Review.bulkCreate(fakeReviews);
-    
-    
-    
+
+
+
     let categoryNames = ['Gummy', 'Sour', 'French', 'Italian', 'Canadian', 'Mexican', 'Spicy', 'Chocolate', 'Fruity', 'Fizzy', 'Chinese', 'Hard-Candies', 'German', 'Swedish', 'American', 'Russian', 'Argentinian']
-    
+
     let fakeCategories = [];
     for (let i = 0; i < categoryNames.length; i++) {
       let categoryObj = {};
@@ -143,9 +144,9 @@ async function seed() {
       fakeCategories.push(categoryObj);
     }
     const Categories = await Category.bulkCreate(fakeCategories);
-    
-    
-    
+
+
+
     // must re-do this so theres no repeats.
     // i.e. there cant be an association between order 5 and product 20
     // two times. the same product wouldnt be listed in the same order two times
@@ -163,14 +164,14 @@ async function seed() {
       fakeOrderProducts.push(orderProductObj);
     }
     const order_products = await OrderProduct.bulkCreate(fakeOrderProducts);
-    
-    
-    
+
+
+
     // this is a helper function for the seed below
     const doesAssocExist = function(arrOfAssoc, newAssoc) {
       let doesExist = false;
       let newItemKeys = Object.values(newAssoc);
-      
+
       arrOfAssoc.forEach((item) => {
         let itemKeys = Object.values(item);
         let isEqual = itemKeys.every((key, idx) => {
@@ -182,35 +183,35 @@ async function seed() {
       })
       return doesExist;
     }
-    
+
     let fakeCategoryProducts = [];
     let i = 1;
     while (i < 1550) {
       let categoryProductObj = {};
       categoryProductObj.productId = i
       categoryProductObj.categoryId = Faker.random.number({min: 1, max: categoryNames.length})
-      
+
       if (!doesAssocExist(fakeCategoryProducts, categoryProductObj)) {
       fakeCategoryProducts.push(categoryProductObj);
       }
-      
+
       let chanceToGoUpInProductId = Faker.random.number({min: 1, max: 100});
       if (chanceToGoUpInProductId > 60) {
         i++
       }
     }
     const category_products = await CategoryProduct.bulkCreate(fakeCategoryProducts);
-    
-    
-    
-    
+
+
+
+
     let fakeCarts = [];
     for (let i = 0; i < 250; i++) {
       let cartObj = {};
       cartObj.productId = Faker.random.number({min: 60, max: 1400})
       cartObj.userId = Faker.random.number({min: 1, max: 100})
       cartObj.quantity = Faker.random.number({min: 1, max: 15})
-      
+
       if (!doesAssocExist(fakeCarts, cartObj)) {
         fakeCarts.push(cartObj);
       }

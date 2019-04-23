@@ -12,6 +12,13 @@ const Order = db.define('order', {
   totalPrice: {
     type: Sequelize.FLOAT,
     allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true,
+      // allowNull: false
+    }
   }
 })
 

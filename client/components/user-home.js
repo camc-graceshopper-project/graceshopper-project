@@ -14,10 +14,13 @@ export const UserHome = props => {
       <Link to={`/users/${id}/orderhistory`}>
         <button type="button">Order History</button>
       </Link>
+
+      <Link to="/cart">
+        <button type="button">Order History</button>
+      </Link>
     </div>
   )
 }
-
 /**
  * CONTAINER
  */

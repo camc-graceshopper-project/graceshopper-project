@@ -1,4 +1,6 @@
 import axios from 'axios'
+import {fetchCart} from './cart'
+import history from '../history'
 
 /**
  * ACTION TYPES
@@ -62,6 +64,26 @@ export const fetchOrderHistory = userId => {
     dispatch(getOrderHistory(data))
   }
 }
+
+
+export const completeCheckout = (charge, email) => {
+  return async (dispatch) => {
+      
+      const orderCreationResponse = await axios.post('/api/orders', {
+          charge,
+          email
+      })
+      
+      // fetch cart again cuz its empty now
+      await fetchCart();
+      
+      history.push('/home')
+      
+      
+  }
+}
+
+
 
 /**
  * REDUCER

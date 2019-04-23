@@ -92,6 +92,8 @@ export default function(state = defaultUser, action) {
     case DELETE_USER:
     const updatedUsers = state.filter(user => user.id !== action.id)
     return updatedUsers
+    case REMOVE_USER:
+    return defaultUser
     default:
       return state
   }

@@ -9,7 +9,7 @@ import CheckBox from './CheckBox'
 import SearchBar from './ProductSearchBar'
 import { Card } from 'react-bootstrap'
 
-//import './AllProducts.css'
+import './AllProducts.css'
 
 class AllProducts extends React.Component {
   constructor() {
@@ -35,9 +35,6 @@ class AllProducts extends React.Component {
       <div>
         <div>
           <SearchBar />
-        </div>
-        <div>
-          <CheckBox />
         </div>
       <div id="all-products">
         <div id="page-container">

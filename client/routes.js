@@ -8,10 +8,18 @@ import AllProducts from './components/AllProducts'
 import SingleOrder from './components/SingleOrder'
 import AllOrders from './components/AllOrders'
 import SingleProduct from './components/SingleProduct'
-import {fetchCategories} from './store/categories'
-import {fetchCart} from './store/cart'
 import ChangeStatusForm from './components/ChangeStatusForm'
+import CreateNewProductForm from './components/CreateNewProductForm'
+import EditProductForm from './components/EditProductForm'
+import {fetchCart} from './store/cart'
+import {fetchCategories} from './store/categories'
 import AddCategoryForm from './components/AddCategoryForm'
+import MakeUserAdminForm from './components/MakeUserAdmin'
+
+import AdminPanel from './components/AdminPanel'
+import {AddRemoveCategoryForm} from './components/AddRemoveProductCategoryForm'
+import CreateReviewForm from './components/CreateReviewForm'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT
@@ -30,23 +38,54 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/products/:id" component={SingleProduct} />
-        <Route path="/all-products/:page" component={AllProducts} />
+        <Route exact path="/all-products/:page" component={AllProducts} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path ="/cart" component={Cart} />
+        <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/account" component={UserHome} />
+            <Route exact path="/home" component={UserHome} />
+            <Route
+              exact
+              path="/users/:id/orderhistory"
+              component={OrderHistory}
+            />
             <Route exact path="/orders/:orderId" component={SingleOrder} />
             <Route
               exact
               path="/orders/:orderId/changeStatus"
               component={ChangeStatusForm}
             />
-            <Route path="/orders" component={AllOrders} />
+            <Route exact path="/adminpanel" component={AdminPanel} />
+            <Route
+              exact
+              path="/adminpanel/postproduct"
+              component={CreateNewProductForm}
+            />
+            <Route
+              exact
+              path="/products/:productId/editproduct"
+              component={EditProductForm}
+            />
+            <Route
+              exact
+              path="/products/:id/postreview"
+              component={CreateReviewForm}
+            />
+            <Route exact path="/orders" component={AllOrders} />
             <Route exact path="/add-category" component={AddCategoryForm} />
-
+            <Route
+              exact
+              path="/make-user-admin"
+              component={MakeUserAdminForm}
+            />
+            <Route
+              exact
+              path="/products/:productId/editproduct/addRemoveCategory"
+              component={AddRemoveCategoryForm}
+            />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

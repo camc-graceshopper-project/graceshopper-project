@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 export class EditProductForm extends React.Component {
   constructor(props) {
-    console.log(props)
     const {description, name, image, inventory, price} = props.singleProduct
     super(props)
     this.state = {

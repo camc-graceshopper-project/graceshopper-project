@@ -50,7 +50,7 @@ router.get('/', async (req, res, next) => {
       
       
       // console.log('logged in cart');
-      // console.log(myCart);
+      console.log(myCart[0].price);
       res.json(myCart);
     }
 

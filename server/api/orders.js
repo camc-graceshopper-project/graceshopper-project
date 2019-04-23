@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order, User, Product, OrderProduct} = require('../db/models')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
-const keySecret = process.env.STRIKE_KEY
+const keySecret = process.env.STRIPE_KEY
 const Stripe = require('stripe')(keySecret);
 
 
@@ -17,17 +17,19 @@ router.get('/', isAdmin, async (req, res, next) => {
 })
 
 
-router.post('/save-stripe-token', (req, res, next) => {
+router.post('/save-stripe-token', async (req, res, next) => {
   
-  const token = req.body.stripeToken;
-  (async () => {
-    const charge = await stripe.charges.create({
-      amount: 500,
-      currency: 'usd',
-      description: 'Example charge',
-      source: token
-    })
-  })()
+  console.log('===========')
+  
+  const token = req.body.token.id;
+  const charge = await Stripe.charges.create({
+    amount: 500,
+    currency: 'usd',
+    description: 'Example charge',
+    source: token
+  })
+  
+  res.json(charge);
   
 })
 
@@ -109,4 +111,51 @@ router.get('/status/:status', async (req, res, next) => {
   }catch(error){
     next(error)
   }
+})
+
+
+
+router.post('/', async (req, res, next) => {
+  
+  // check to see if i can get info from the checkout thingy
+  console.log(req.body.charge);
+  const email = req.body.charge.email;
+  
+  
+  let cart;
+  if (req.user.id) {
+    let myUser = User.findByPk(req.user.id)
+    cart = myUser.getProducts();
+    // idk if this works. it SHOULD empty cart in database
+    myUser.setProducts([]);
+  } else {
+    cart = req.session.cart;
+    req.session.cart = [];
+  }
+  
+  let sum = 0;
+  cart.forEach((item) => {
+    sum = sum + (item.cart.quantity * item.price)
+  }) 
+  
+  // might have to declare userid not required on assocation
+  const newOrder = {
+    totalPrice: sum
+  }
+  
+  const order = Order.create(newOrder);
+  
+  
+  cart.forEach((item) => {
+    let newAssociation = {
+      quantity: item.order.quantity,
+      price: item.cart.price,
+      orderId: order.id,
+      productId: item.id
+    }
+    OrderProduct.create(newAssociation)
+  })
+  
+  res.json('testtttt');
+  
 })

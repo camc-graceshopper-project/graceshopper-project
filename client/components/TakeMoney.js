@@ -1,11 +1,18 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
+// import {completeCheckout} from '../store/orders'
+
 
 export default class TakeMoney extends React.Component {
+  
   onToken = async (token) => {
-    const stripeResponse = await axios.post('/api/orders/save-stripe-token', token);
-    const data = stripeResponse.json();
+    const stripeResponse = await axios.post('/api/orders/save-stripe-token', {
+      amount: 500,
+      token
+    });
+    console.log(stripeResponse);
+    // const data = stripeResponse.json();
     // ? idk
     
     // fetch('/save-stripe-token', {
@@ -16,9 +23,12 @@ export default class TakeMoney extends React.Component {
     //     alert(`We are in business, ${data.email}`);
     //   });
     // });
+    
+    
+    //this.props.completeCheckout();
+    
   }
 
-  // ...
 
   render() {
     return (
@@ -30,3 +40,13 @@ export default class TakeMoney extends React.Component {
     )
   }
 }
+
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     completeCheckout: () => dispatch(completeCheckout())
+//   }
+// }
+
+// export default connect(null, mapDispatchToProps)(TakeMoney)
+

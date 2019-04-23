@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+import {fetchCart} from './cart'
+import history from '../history'
 
 /**
  * ACTION TYPES
@@ -59,9 +60,26 @@ export const statusOrders = (orderStatus) => {
     }
 }
 
-export const createOrder = (order) => {
+// export const createOrder = (order) => {
+//     return async (dispatch) => {
+        
+        
+        
+//     }
+// }
+
+
+export const completeCheckout = (charge) => {
     return async (dispatch) => {
         
+        const orderCreationResponse = await axios.post('/api/orders', {
+            charge
+        })
+        
+        // fetch cart again cuz its empty now
+        await fetchCart();
+        
+        history.push('/home')
         
         
     }

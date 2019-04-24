@@ -1,0 +1,21 @@
+#make-admin-page-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 30vw;
+  margin-right: 30vw;
+  border: 2px black solid;
+  height: 400px;
+  background-color: rgb(179, 179, 230);
+  border-radius: 10px;
+}
+
+#make-admin-page-container > *{
+  font-size: 18px;
+  padding-top: 20px;
+}
+
+#make-admin-button{
+  margin-left: 20px;
+}

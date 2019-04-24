@@ -16,3 +16,9 @@ nav>div>a{
   color: white;
   background-color: rgb(77, 77, 169)
 }
+
+#admin-panel-link{
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+

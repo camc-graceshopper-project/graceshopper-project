@@ -1,4 +1,10 @@
 
+#cart-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .product-card{
   background-color: rgb(179, 179, 230);
   border-radius: 10px;
@@ -33,4 +39,9 @@
 .product-name{
   color: black;
   font-size: 22px;
+}
+
+#checkoutButton{
+  font-size: 20px;
+  font-weight: bold;
 }

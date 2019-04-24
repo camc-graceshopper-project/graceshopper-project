@@ -15,47 +15,59 @@ const {
 } = require('../server/db/models')
 const Faker = require('faker')
 
-let testVar = Faker.lorem.sentence();
-console.log(testVar);
+let testVar = Faker.lorem.sentence()
+console.log(testVar)
 
 async function seed() {
   try {
     await db.sync({force: true})
     console.log('db synced!')
 
-    let fakeUsers = [];
-    fakeUsers.push({email: 'cody@email.com', password: '123', isAdmin: true});
-    fakeUsers.push({email: 'murphy@email.com', password: '123', isAdmin: false})
+    let fakeUsers = []
+    fakeUsers.push({
+      email: 'cody@email.com',
+      password: '123',
+      isAdmin: true,
+      resetPasswordToken: 'hello123Cody',
+      resetPasswordExpires: '2019-06-21 22:20:07.893-05'
+    })
+    fakeUsers.push({
+      email: 'murphy@email.com',
+      password: '123',
+      isAdmin: false,
+      resetPasswordToken: 'hello3456murphy',
+      resetPasswordExpires: '2019-06-21 22:20:07.893-05'
+    })
     for (let i = 0; i < 98; i++) {
-      let userObj = {};
-      userObj.email = Faker.internet.email();
-      userObj.password = Faker.internet.password();
-      userObj.isAdmin = false;
-      fakeUsers.push(userObj);
+      let userObj = {}
+      userObj.email = Faker.internet.email()
+      userObj.password = Faker.internet.password()
+      userObj.isAdmin = false
+      userObj.resetPasswordToken = Faker.random.uuid()
+      userObj.resetPasswordExpires = Faker.date.future(1 / 4)
+      fakeUsers.push(userObj)
     }
 
-    const users = await User.bulkCreate(fakeUsers);
+    const users = await User.bulkCreate(fakeUsers)
 
-
-
-    let fakeProducts = [];
+    let fakeProducts = []
     for (let i = 0; i < 50; i++) {
-      let productObj = {};
+      let productObj = {}
       productObj.name = Faker.commerce.productName()
       productObj.description = Faker.lorem.paragraphs(2, '\n')
-      productObj.price = Number(Faker.finance.amount(3.00, 15.00, 2));
-      productObj.inventory = 0;
+      productObj.price = Number(Faker.finance.amount(3.0, 15.0, 2))
+      productObj.inventory = 0
       productObj.photo = Faker.image.abstract()
-      fakeProducts.push(productObj);
+      fakeProducts.push(productObj)
     }
     for (let i = 0; i < 1500; i++) {
-      let productObj = {};
+      let productObj = {}
       productObj.name = Faker.commerce.productName()
       productObj.description = Faker.lorem.paragraphs(2, '\n')
-      productObj.price = Number(Faker.finance.amount(3.00 ,15.00 ,2));
+      productObj.price = Number(Faker.finance.amount(3.0, 15.0, 2))
       productObj.inventory = Faker.random.number(20000)
       productObj.image = Faker.image.abstract()
-      fakeProducts.push(productObj);
+      fakeProducts.push(productObj)
     }
     const products = await Product.bulkCreate(fakeProducts)
 
@@ -107,44 +119,60 @@ async function seed() {
     //   })
     // ])
 
-
-    let fakeOrders = [];
+    let fakeOrders = []
     for (let i = 0; i < 500; i++) {
-      let orderObj = {};
-      orderObj.status = Faker.random.arrayElement(['Created', 'Processing', 'Cancelled', 'Completed'])
-      orderObj.totalPrice = Faker.finance.amount(5.00 , 50.00, 2);
+      let orderObj = {}
+      orderObj.status = Faker.random.arrayElement([
+        'Created',
+        'Processing',
+        'Cancelled',
+        'Completed'
+      ])
+      orderObj.totalPrice = Faker.finance.amount(5.0, 50.0, 2)
       orderObj.userId = Faker.random.number({min: 1, max: 100})
       fakeOrders.push(orderObj)
     }
-    const orders = await Order.bulkCreate(fakeOrders);
+    const orders = await Order.bulkCreate(fakeOrders)
 
-
-
-    let fakeReviews = [];
+    let fakeReviews = []
     for (let i = 0; i < 850; i++) {
-      let reviewObj = {};
+      let reviewObj = {}
       reviewObj.rating = Faker.random.number({min: 1, max: 5})
       reviewObj.title = Faker.lorem.sentence()
       reviewObj.description = Faker.lorem.paragraph()
       reviewObj.productId = Faker.random.number({min: 60, max: 1400})
       reviewObj.userId = Faker.random.number({min: 1, max: 100})
-      fakeReviews.push(reviewObj);
+      fakeReviews.push(reviewObj)
     }
-    const reviews = await Review.bulkCreate(fakeReviews);
+    const reviews = await Review.bulkCreate(fakeReviews)
 
+    let categoryNames = [
+      'Gummy',
+      'Sour',
+      'French',
+      'Italian',
+      'Canadian',
+      'Mexican',
+      'Spicy',
+      'Chocolate',
+      'Fruity',
+      'Fizzy',
+      'Chinese',
+      'Hard-Candies',
+      'German',
+      'Swedish',
+      'American',
+      'Russian',
+      'Argentinian'
+    ]
 
-
-    let categoryNames = ['Gummy', 'Sour', 'French', 'Italian', 'Canadian', 'Mexican', 'Spicy', 'Chocolate', 'Fruity', 'Fizzy', 'Chinese', 'Hard-Candies', 'German', 'Swedish', 'American', 'Russian', 'Argentinian']
-
-    let fakeCategories = [];
+    let fakeCategories = []
     for (let i = 0; i < categoryNames.length; i++) {
-      let categoryObj = {};
+      let categoryObj = {}
       categoryObj.name = categoryNames[i]
-      fakeCategories.push(categoryObj);
+      fakeCategories.push(categoryObj)
     }
-    const Categories = await Category.bulkCreate(fakeCategories);
-
-
+    const Categories = await Category.bulkCreate(fakeCategories)
 
     // must re-do this so theres no repeats.
     // i.e. there cant be an association between order 5 and product 20
@@ -153,70 +181,69 @@ async function seed() {
     // or just ignore it for now and disable unique constraint on model somehow
     // when fix it, make i < like 3000, to ensure statistically that every
     // order likely has some products in it (or we'll have empty orders)
-    let fakeOrderProducts = [];
+    let fakeOrderProducts = []
     for (let i = 0; i < 30; i++) {
-      let orderProductObj = {};
+      let orderProductObj = {}
       orderProductObj.quantity = Faker.random.number({min: 1, max: 10})
-      orderProductObj.price = Faker.finance.amount(5.00 , 15.00, 2);
+      orderProductObj.price = Faker.finance.amount(5.0, 15.0, 2)
       orderProductObj.orderId = Faker.random.number({min: 1, max: 500})
       orderProductObj.productId = Faker.random.number({min: 1, max: 1500})
-      fakeOrderProducts.push(orderProductObj);
+      fakeOrderProducts.push(orderProductObj)
     }
-    const order_products = await OrderProduct.bulkCreate(fakeOrderProducts);
-
-
+    const order_products = await OrderProduct.bulkCreate(fakeOrderProducts)
 
     // this is a helper function for the seed below
     const doesAssocExist = function(arrOfAssoc, newAssoc) {
-      let doesExist = false;
-      let newItemKeys = Object.values(newAssoc);
+      let doesExist = false
+      let newItemKeys = Object.values(newAssoc)
 
-      arrOfAssoc.forEach((item) => {
-        let itemKeys = Object.values(item);
+      arrOfAssoc.forEach(item => {
+        let itemKeys = Object.values(item)
         let isEqual = itemKeys.every((key, idx) => {
-          return (key === newItemKeys[idx])
+          return key === newItemKeys[idx]
         })
         if (isEqual) {
-          doesExist = true;
+          doesExist = true
         }
       })
-      return doesExist;
+      return doesExist
     }
 
-    let fakeCategoryProducts = [];
-    let i = 1;
+    let fakeCategoryProducts = []
+    let i = 1
     while (i < 1550) {
-      let categoryProductObj = {};
+      let categoryProductObj = {}
       categoryProductObj.productId = i
-      categoryProductObj.categoryId = Faker.random.number({min: 1, max: categoryNames.length})
+      categoryProductObj.categoryId = Faker.random.number({
+        min: 1,
+        max: categoryNames.length
+      })
 
       if (!doesAssocExist(fakeCategoryProducts, categoryProductObj)) {
-      fakeCategoryProducts.push(categoryProductObj);
+        fakeCategoryProducts.push(categoryProductObj)
       }
 
-      let chanceToGoUpInProductId = Faker.random.number({min: 1, max: 100});
+      let chanceToGoUpInProductId = Faker.random.number({min: 1, max: 100})
       if (chanceToGoUpInProductId > 60) {
         i++
       }
     }
-    const category_products = await CategoryProduct.bulkCreate(fakeCategoryProducts);
+    const category_products = await CategoryProduct.bulkCreate(
+      fakeCategoryProducts
+    )
 
-
-
-
-    let fakeCarts = [];
+    let fakeCarts = []
     for (let i = 0; i < 250; i++) {
-      let cartObj = {};
+      let cartObj = {}
       cartObj.productId = Faker.random.number({min: 60, max: 1400})
       cartObj.userId = Faker.random.number({min: 1, max: 100})
       cartObj.quantity = Faker.random.number({min: 1, max: 15})
 
       if (!doesAssocExist(fakeCarts, cartObj)) {
-        fakeCarts.push(cartObj);
+        fakeCarts.push(cartObj)
       }
     }
-    const carts = await Cart.bulkCreate(fakeCarts);
-
+    const carts = await Cart.bulkCreate(fakeCarts)
   } catch (err) {
     console.log(err)
   }

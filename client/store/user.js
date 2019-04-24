@@ -1,14 +1,14 @@
 import axios from 'axios'
 import history from '../history'
-import {fetchCart} from './cart';
+import {fetchCart} from './cart'
 
 /**
  * ACTION TYPES
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-const DELETE_USER =  'DELETE_USER'
-
+const DELETE_USER = 'DELETE_USER'
+const UPDATE_USER_PASSWORD = 'UPDATE_USER_PASSWORD'
 /**
  * INITIAL STATE
  */
@@ -19,11 +19,26 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-const deleteUser = (id) => ({type: DELETE_USER, id})
+const deleteUser = id => ({type: DELETE_USER, id})
+const updateUserPassword = (token, newPassword) => ({
+  type: UPDATE_USER_PASSWORD,
+  token,
+  newPassword
+})
 
 /**
  * THUNK CREATORS
  */
+
+export const changePassword = (token, newPassword) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/users/reset/${token}`, newPassword)
+    dispatch(updateUserPassword(token, res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -40,7 +55,7 @@ export const deleteUserThunk = id => async dispatch => {
   } catch (err) {
     console.error(err)
   }
- }
+}
 
 export const auth = (email, password, method) => async dispatch => {
   let res
@@ -56,13 +71,12 @@ export const auth = (email, password, method) => async dispatch => {
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
-  
+
   try {
     dispatch(fetchCart())
   } catch (err) {
     console.error(err)
   }
-  
 }
 
 export const logout = () => async dispatch => {
@@ -73,13 +87,12 @@ export const logout = () => async dispatch => {
   } catch (err) {
     console.error(err)
   }
-  
+
   try {
     dispatch(fetchCart())
-  } catch(err) {
+  } catch (err) {
     console.error(err)
   }
-  
 }
 
 /**
@@ -90,8 +103,11 @@ export default function(state = defaultUser, action) {
     case GET_USER:
       return action.user
     case DELETE_USER:
-    const updatedUsers = state.filter(user => user.id !== action.id)
-    return updatedUsers
+      const updatedUsers = state.filter(user => user.id !== action.id)
+      return updatedUsers
+    case UPDATE_USER_PASSWORD:
+      console.log(action.newPassword)
+      return {...state, password: action.newPassword}
     default:
       return state
   }

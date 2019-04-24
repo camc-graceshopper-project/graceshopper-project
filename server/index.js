@@ -10,6 +10,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+var flash = require('express-flash')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -60,6 +61,7 @@ const createApp = () => {
       saveUninitialized: false
     })
   )
+  app.use(flash())
   app.use(passport.initialize())
   app.use(passport.session())
 

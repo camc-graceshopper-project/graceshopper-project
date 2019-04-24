@@ -30,8 +30,13 @@ const User = db.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  resetPasswordToken: {
+    type: Sequelize.STRING
+  },
+  resetPasswordExpires: {
+    type: Sequelize.DATE
   }
-
 })
 
 module.exports = User

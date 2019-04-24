@@ -20,6 +20,7 @@ import AdminPanel from './components/AdminPanel'
 import {AddRemoveCategoryForm} from './components/AddRemoveProductCategoryForm'
 import CreateReviewForm from './components/CreateReviewForm'
 import OrderHistory from './components/OrderHistory'
+import PasswordResetForm from './components/PasswordResetForm'
 
 /**
  * COMPONENT
@@ -85,6 +86,11 @@ class Routes extends Component {
               exact
               path="/products/:productId/editproduct/addRemoveCategory"
               component={AddRemoveCategoryForm}
+            />
+            <Route
+              exact
+              path="/users/reset/:token"
+              component={PasswordResetForm}
             />
           </Switch>
         )}

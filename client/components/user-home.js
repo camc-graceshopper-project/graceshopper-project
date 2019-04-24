@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email, id} = props
+  const {email, id, user} = props
   return (
     <div>
       <h3>Welcome, {email}</h3>
@@ -18,6 +18,10 @@ export const UserHome = props => {
       <Link to="/cart">
         <button type="button">Go to cart</button>
       </Link>
+      <br />
+      <Link to={`/users/reset/${user.resetPasswordToken}`}>
+        <button type="button">Reset Password</button>
+      </Link>
     </div>
   )
 }
@@ -27,7 +31,8 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     email: state.user.email,
-    id: state.user.id
+    id: state.user.id,
+    user: state.user
   }
 }
 export default connect(mapState)(UserHome)

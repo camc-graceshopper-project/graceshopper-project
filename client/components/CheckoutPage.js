@@ -39,7 +39,7 @@ class CheckoutPage extends React.Component {
           )
         })}
         
-        <h1>Total: ${total}</h1>
+        <h1>Total: ${(total/100).toFixed(2)}</h1>
         <div id="pay-button" >
         <TakeMoney amount={total}/>
         </div>

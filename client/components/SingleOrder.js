@@ -1,6 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleOrder} from '../store/singleOrder'
+import {Link} from 'react-router-dom'
+import {fetchSingleOrder, updateOneOrder} from '../store/singleOrder'
+import orders from '../store/orders';
+import {Card} from 'react-bootstrap'
 
 
 class SingleOrder extends React.Component {

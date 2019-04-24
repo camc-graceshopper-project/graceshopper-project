@@ -114,6 +114,7 @@ async function seed() {
       orderObj.status = Faker.random.arrayElement(['Created', 'Processing', 'Cancelled', 'Completed'])
       orderObj.totalPrice = Faker.finance.amount(5.00 , 50.00, 2);
       orderObj.userId = Faker.random.number({min: 1, max: 100})
+      orderObj.email = Faker.internet.email();
       fakeOrders.push(orderObj)
     }
     const orders = await Order.bulkCreate(fakeOrders);

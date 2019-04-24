@@ -101,7 +101,7 @@ router.post('/', async (req, res, next) => {
   const amount = req.body.charge;
   
   let cart;
-  if (req.user.id) {
+  if (req.user) {
     let myUser = await User.findByPk(req.user.id)
     cart = await myUser.getProducts();
     // idk if this works. it SHOULD empty cart in database
@@ -111,8 +111,13 @@ router.post('/', async (req, res, next) => {
     req.session.cart = [];
   }
   
+  let orderUserId;
+  if (req.user) {
+    orderUserId = req.user.id
+  } else {
+    orderUserId = null;
+  }
   
-  let orderUserId = req.user.id || null;
   const newOrder = {
     totalPrice: amount,
     status: 'Created',

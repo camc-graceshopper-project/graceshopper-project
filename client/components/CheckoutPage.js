@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import TakeMoney from './TakeMoney';
 
+import './CheckoutPage.css'
+
 class CheckoutPage extends React.Component {
   
   
@@ -16,24 +18,31 @@ class CheckoutPage extends React.Component {
     
     
     return (
-      <div>
+      <div id="checkout-page-container">
         
         {products.map(product => {
           return (
             
-            <div key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                {product.name}
-                <img src={product.image} />
-              </Link>
-              
-            </div>
-            
+<div key={product.id}>
+                        <div className="product-card">
+                          <Link to={`/products/${product.id}`}>
+                            <img className="product-image" src={product.image} />
+                          </Link>
+                          
+                          <div className="product-details">
+                          <Link  to={`/products/${product.id}`}>
+                            <span className="product-name">{product.name}</span>
+                          </Link>
+                          <span>${product.price}</span>
+                          <span>Quantity: {product.cart.quantity}</span>
+            </div></div></div>
           )
         })}
         
+        <h1>Total: ${total}</h1>
+        <div id="pay-button" >
         <TakeMoney amount={total}/>
-        
+        </div>
       </div>
     )
   }

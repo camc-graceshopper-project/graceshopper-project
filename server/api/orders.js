@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order, Product} = require('../db/models')
 const Mailgun = require('mailgun-js')
 const {isAdmin, isAdminOrIsUser} = require('../middleware/auth.middeware')
 module.exports = router
@@ -10,7 +10,9 @@ var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN})
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
-    const allOrders = await Order.findAll()
+    const allOrders = await Order.findAll({
+      include: [Product]
+    })
     res.json(allOrders)
   } catch (err) {
     next(err)
@@ -20,8 +22,10 @@ router.get('/', isAdmin, async (req, res, next) => {
 router.get('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
-      where: {id: req.params.orderId}
+      where: {id: req.params.orderId},
+      include: [Product]
     })
+    console.log('ORDER', order.products[0].id)
     res.json(order)
   } catch (err) {
     next(err)
@@ -32,7 +36,7 @@ router.put('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        id: req.params.orderId
+        id: req.params.orderId,
       }
     })
 
@@ -51,7 +55,6 @@ router.put('/:orderId', isAdmin, async (req, res, next) => {
       console.log(body)
       res.json(updatedOrder)
     })
-    // res.json(updatedOrder)
   } catch (error) {
     next(error)
   }
@@ -62,7 +65,8 @@ router.get('/status/:status', async (req, res, next) => {
     const statusOrders = await Order.findAll({
       where: {
         status: req.params.status
-      }
+      },
+      include: [Product]
     })
     res.json(statusOrders)
   } catch (error) {

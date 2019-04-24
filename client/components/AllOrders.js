@@ -30,17 +30,28 @@ class AllOrders extends React.Component {
             <div>
               <ol>
                 {orders.map(order => {
-                    return (
-                        <li key={order.id}>
 
-                             <p>Order ID: {order.id}</p>
-                             <p>Order Price: {order.totalPrice}</p>
-                             <p>Order Status: {order.status}</p>
-                             <Link to={`/orders/${order.id}`}><p><u>View</u></p></Link>
+                    return(!order.products ? (
+                      <li key={order.id}>
+                        <p>Order# {order.id}</p>
+                        <p>Order Status: {order.status}</p>
+                        <Link to={`/orders/${order.id}`}><h3>Order Details</h3></Link>
+                      </li>
+                    ) : (
+                      order.products.map(product =>
+                         (
 
-                        </li>
-                    )
-                })}
+                          <li key={product.id}>
+                               <p>{product.name}</p>
+                               <p>Order# {order.id}</p>
+                               <p>Order Status: {order.status}</p>
+                               <Link to={`/orders/${order.id}`}><h3>Order Details</h3></Link>
+
+                          </li>
+
+                    )))
+
+                    )})}
               </ol>
             </div>
           </div>

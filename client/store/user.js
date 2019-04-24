@@ -102,12 +102,18 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
+
     case DELETE_USER:
       const updatedUsers = state.filter(user => user.id !== action.id)
       return updatedUsers
+
     case UPDATE_USER_PASSWORD:
       console.log(action.newPassword)
       return {...state, password: action.newPassword}
+    // const updatedUsers = state.filter(user => user.id !== action.id)
+    // return updatedUsers
+    case REMOVE_USER:
+      return defaultUser
     default:
       return state
   }

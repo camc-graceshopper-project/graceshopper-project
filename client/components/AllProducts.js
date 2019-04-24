@@ -6,9 +6,13 @@ import {fetchProducts} from '../store/products'
 import AddToCartButtonAllProducts from './AddToCartButtonAllProducts'
 import CreateNewProductForm from './CreateNewProductForm'
 import CheckBox from './CheckBox'
+import SearchBar from './ProductSearchBar'
+import { Card } from 'react-bootstrap'
+
+//import './AllProducts.css'
 
 class AllProducts extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.handleClick = this.handleClick.bind(this);
   }
@@ -30,56 +34,84 @@ class AllProducts extends React.Component {
     return (
       <div>
         <div>
+          <SearchBar />
+        </div>
+        <div>
           <CheckBox />
         </div>
+      <div id="all-products">
+        <div id="page-container">
 
-        <div>
-          {thisPage > 1 &&
-            <Link to={`/all-products/${thisPage - 1}`}>
-              <button type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
-            </Link>
-          }
+          <div id="left-side">
+            <CheckBox />
+          </div>
 
-          <Link to={`/all-products/${thisPage + 1}`}>
-            <button type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
-            </Link>
-        </div>
-
-        {!products.length ? (
-          <div>No Candies!</div>
-        ) : (
+          <div id="right-side">
             <div>
-              <Link to='/add-category'>Add Category</Link>
-              <br />
-              <br />
-              {products.map(product => {
-                return (
-                  <div key={product.id}>
-                    <Link to={`/products/${product.id}`}>
-                      {product.name}
-                      <img src={product.image} />
-                    </Link>
-                    <AddToCartButtonAllProducts product={product} />
-                    <br />
-                    <br />
-                  </div>
-                )
-              })}
+              <div className="buttons">
+                {thisPage > 1 &&
+                  <Link to={`/all-products/${thisPage - 1}`}>
+                    <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
+                  </Link>
+                }
+
+                <Link to={`/all-products/${thisPage + 1}`}>
+                  <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
+                </Link>
+              </div>
             </div>
-          )}
 
-        <div>
-          {thisPage > 1 &&
-            <Link to={`/all-products/${thisPage - 1}`}>
-              <button type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
-            </Link>
-          }
+            {!products.length ? (
+              <div>No Candies!</div>
+            ) : (
 
-          <Link to={`/all-products/${thisPage + 1}`}>
-            <button type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
-          </Link>
+                <div>
+                  <Link to='/add-category'>Add Category</Link>
+                  <br />
+                  <br />
+                  {products.map(product => {
+                    return (
+
+                      <div key={product.id}>
+
+                        <div className="product-card">
+                          <Link to={`/products/${product.id}`}>
+                            <img className="product-image" src={product.image} />
+                          </Link>
+
+                          <div className="product-details">
+                          <Link  to={`/products/${product.id}`}>
+                            <span className="product-name">{product.name}</span>
+                          </Link>
+
+                          <AddToCartButtonAllProducts product={product} />
+                          </div>
+                        </div>
+
+                      </div>
+
+                    )
+                  })}
+                </div>
+              )}
+
+            <div>
+              <div className="buttons">
+                {thisPage > 1 &&
+                  <Link to={`/all-products/${thisPage - 1}`}>
+                    <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage - 1)}>{" < "}</button>
+                  </Link>
+                }
+
+                <Link to={`/all-products/${thisPage + 1}`}>
+                  <button className="page-buttons" type="button" onClick={() => this.handleClick(thisPage + 1)}>{" > "}</button>
+                </Link>
+              </div>
+            </div>
+
+          </div>
         </div>
-
+        </div>
       </div>
     )
   }

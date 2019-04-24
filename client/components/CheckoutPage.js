@@ -1,37 +1,38 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import RemoveButton from './RemoveButton'
-import ChangeQuantityCart from './ChangeQuantityCart'
+import TakeMoney from './TakeMoney';
 
-class Cart extends React.Component {
+class CheckoutPage extends React.Component {
+  
+  
+  
   render() {
     const products = this.props.cart
-
-    if (!products) {
-      return <div>Your cart is empty!</div>
-    }
-
+    let total = 0;
+    products.forEach((item) => {
+      total = total + (item.cart.quantity * item.price*100)
+    })
+    
+    
     return (
       <div>
+        
         {products.map(product => {
           return (
+            
             <div key={product.id}>
               <Link to={`/products/${product.id}`}>
                 {product.name}
                 <img src={product.image} />
               </Link>
-
-              <ChangeQuantityCart product={product} />
-
-              <RemoveButton product={product} />
+              
             </div>
+            
           )
         })}
         
-        <Link to='/checkout'>
-          <button type="button">Checkout</button>
-        </Link>
+        <TakeMoney amount={total}/>
         
       </div>
     )
@@ -50,4 +51,4 @@ const mapStateToProps = state => {
 //   }
 // }
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps)(CheckoutPage)

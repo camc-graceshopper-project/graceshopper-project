@@ -1,0 +1,27 @@
+#home-page-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 40vw; */
+  margin-left: 30vw;
+  margin-right: 30vw;
+  border: 2px black solid;
+  height: 400px;
+  background-color: rgb(179, 179, 230);
+  border-radius: 10px;
+}
+
+#home-page-container>h3{
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.home-page-button{
+  margin-top: 35px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: darkblue;
+  color: white;
+}

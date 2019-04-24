@@ -14,7 +14,9 @@ var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN})
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
-    const allOrders = await Order.findAll()
+    const allOrders = await Order.findAll({
+      include: [Product]
+    })
     res.json(allOrders)
   } catch (err) {
     next(err)
@@ -42,8 +44,10 @@ router.post('/save-stripe-token', async (req, res, next) => {
 router.get('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
-      where: {id: req.params.orderId}
+      where: {id: req.params.orderId},
+      include: [Product]
     })
+    console.log('ORDER', order.products[0].id)
     res.json(order)
   } catch (err) {
     next(err)
@@ -54,7 +58,7 @@ router.put('/:orderId', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        id: req.params.orderId
+        id: req.params.orderId,
       }
     })
 
@@ -73,7 +77,6 @@ router.put('/:orderId', isAdmin, async (req, res, next) => {
       }
       res.json(updatedOrder)
     })
-    // res.json(updatedOrder)
   } catch (error) {
     next(error)
   }
@@ -84,7 +87,8 @@ router.get('/status/:status', async (req, res, next) => {
     const statusOrders = await Order.findAll({
       where: {
         status: req.params.status
-      }
+      },
+      include: [Product]
     })
     res.json(statusOrders)
   } catch (error) {
@@ -101,7 +105,7 @@ router.post('/', async (req, res, next) => {
   const amount = req.body.charge;
   
   let cart;
-  if (req.user.id) {
+  if (req.user) {
     let myUser = await User.findByPk(req.user.id)
     cart = await myUser.getProducts();
     // idk if this works. it SHOULD empty cart in database
@@ -111,8 +115,13 @@ router.post('/', async (req, res, next) => {
     req.session.cart = [];
   }
   
+  let orderUserId;
+  if (req.user) {
+    orderUserId = req.user.id
+  } else {
+    orderUserId = null;
+  }
   
-  let orderUserId = req.user.id || null;
   const newOrder = {
     totalPrice: amount,
     status: 'Created',

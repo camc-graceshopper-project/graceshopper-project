@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-
+import './MakeUserAdmin.css'
 
 export default class MakeUserAdminForm extends React.Component {
     constructor (props) {
@@ -33,6 +33,7 @@ export default class MakeUserAdminForm extends React.Component {
     render(){
 
         return(
+            <div id="make-admin-page-container">
           <form onSubmit={this.handleSubmit}>
             <div>
                 <h2>Make User An Admin</h2>
@@ -45,9 +46,10 @@ export default class MakeUserAdminForm extends React.Component {
                     value={this.state.email}
                     onChange={this.handleChange}
                 />
-                <button type='submit'>Submit</button>
+                <button id="make-admin-button" type='submit'>Submit</button>
             </div>
           </form>
+          </div>
         )
     }
 }

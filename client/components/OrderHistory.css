@@ -1,0 +1,25 @@
+.order-card{
+  background-color: rgb(179, 179, 230);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  margin: 20px;
+  margin-left: 32vw;
+  margin-right: 32vw;
+  margin-bottom: 0px;
+}
+
+
+#order-history-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+
+.bold{
+  font-weight: bold;
+}

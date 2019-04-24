@@ -4,7 +4,7 @@ import { fetchCategories } from '../store/categories'
 import { fetchProducts } from '../store/products'
 import { addFilterToStore, removeFilterFromStore, updateFiltersOnStore } from '../store/filterCategories'
 
-//import './CheckBox.css'
+import './CheckBox.css'
 
 class Checkbox extends React.Component {
   constructor() {

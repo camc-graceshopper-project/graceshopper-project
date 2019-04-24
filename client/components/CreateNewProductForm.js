@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addNewProduct} from '../store/products'
 
+import './CreateNewProductForm.css'
+
 export class CreateNewProductForm extends React.Component {
   constructor(props) {
     super(props)
@@ -26,6 +28,7 @@ export class CreateNewProductForm extends React.Component {
 
   render() {
     return (
+      <div id="make-item-container">
       <form onSubmit={this.handleSubmit}>
         <div>
           <h2>Create A New Product: </h2>
@@ -87,8 +90,9 @@ export class CreateNewProductForm extends React.Component {
           />
         </div>
         <br />
-        <button type="submit">Submit</button>
+        <button id="make-item-button" type="submit">Submit</button>
       </form>
+      </div>
     )
   }
 }

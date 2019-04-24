@@ -6,11 +6,14 @@ import {auth} from '../store'
 /**
  * COMPONENT
  */
+
+ import './auth-form.css'
+ 
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
+    <div className="auth-form-container">
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
@@ -24,12 +27,12 @@ const AuthForm = props => {
           </label>
           <input name="password" type="password" />
         </div>
-        <div>
+        <div className="auth-login-button">
           <button type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a className="google-auth-link" href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }

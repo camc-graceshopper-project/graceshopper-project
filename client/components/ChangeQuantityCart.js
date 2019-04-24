@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../store/cart'
 
+import './ChangeQuantityCart.css'
+
 class ChangeQuantityCart extends React.Component {
   constructor(props) {
     super(props)
@@ -41,7 +43,7 @@ class ChangeQuantityCart extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div id="button-container">
           <button type="button" onClick={this.handleIncriment}>+</button>
           <h3>{this.state.quantity}</h3>
           <button type="button" onClick={this.handleDecrement}>-</button>

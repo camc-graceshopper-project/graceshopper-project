@@ -3,6 +3,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {removeFromCart} from '../store/cart'
 
+import './RemoveButton.css'
+
 const RemoveButton = function(props) {
   let product = props.product;
   product.cart = {quantity: 1}
@@ -13,9 +15,9 @@ const RemoveButton = function(props) {
   }
   
   return (
-    <div>
+    <div >
       <form onClick={handleSubmit}>
-        <button type="submit">
+        <button className="remove-button-cart" type="submit">
           Remove From Cart
         </button>
       </form>

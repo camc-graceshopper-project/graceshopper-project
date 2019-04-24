@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchOrders, statusOrders} from '../store/orders'
 import {Link} from 'react-router-dom'
 
+import './AllOrders.css'
 
 class AllOrders extends React.Component {
 
@@ -19,8 +20,8 @@ class AllOrders extends React.Component {
 
 
         return(
-          <div>
-            <select onChange={this.statusChange}>
+          <div id="all-orders-page-container">
+            <select onChange={this.statusChange} id="orders-dropdown-selector">
               <option>Filter By Status...</option>
               <option value='Created'>Created</option>
               <option value='Processing'>Processing</option>
@@ -28,20 +29,32 @@ class AllOrders extends React.Component {
               <option value='Cancelled'>Cancelled</option>
             </select>
             <div>
-              <ol>
+              <ul className="orders-list">
                 {orders.map(order => {
-                    return (
-                        <li key={order.id}>
 
-                             <p>Order ID: {order.id}</p>
-                             <p>Order Price: {order.totalPrice}</p>
-                             <p>Order Status: {order.status}</p>
-                             <Link to={`/orders/${order.id}`}><p><u>View</u></p></Link>
+                    return(!order.products ? (
+                      
+                      <li key={order.id} >
+                        <p>Order# {order.id}</p>
+                        <p>Order Status: {order.status}</p>
+                        <Link to={`/orders/${order.id}`}><h3>Order Details</h3></Link>
+                      </li>
+                    ) : (
+                      order.products.map(product =>
+                         (
 
-                        </li>
-                    )
-                })}
-              </ol>
+                          <li key={product.id} className="all-orders-card">
+                               <p>{product.name}</p>
+                               <p>Order# {order.id}</p>
+                               <p>Order Status: <span className="bold">{order.status}</span></p>
+                               <Link className="order-detail-button" to={`/orders/${order.id}`}><h3>Order Details</h3></Link>
+
+                          </li>
+
+                    )))
+
+                    )})}
+              </ul>
             </div>
           </div>
 

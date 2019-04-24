@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {postCategory} from '../store/categories'
 
+import './AddCategoryForm.css'
 
 export class AddCategoryForm extends React.Component {
     constructor (props) {
@@ -32,6 +33,7 @@ export class AddCategoryForm extends React.Component {
     render(){
 
         return(
+            <div id="make-category-page-container">
           <form onSubmit={this.handleSubmit}>
             <div>
                 <h3>Add Category:</h3>
@@ -43,9 +45,10 @@ export class AddCategoryForm extends React.Component {
                     value={this.state.name}
                     onChange={this.handleChange}
                 />
-                <button type='submit'>Add</button>
+                <button id="make-category-button" type='submit'>Add</button>
             </div>
           </form>
+          </div>
         )
     }
 }

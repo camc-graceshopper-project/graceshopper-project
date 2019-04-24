@@ -1,0 +1,51 @@
+.all-orders-card{
+  background-color: rgb(179, 179, 230);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  margin: 20px;
+  margin-left: 32vw;
+  margin-right: 32vw;
+  margin-bottom: 0px;
+}
+
+
+#all-orders-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+
+.bold{
+  font-weight: bold;
+}
+
+#all-orders-page-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orders-list{
+  list-style: none;
+}
+
+#orders-dropdown-selector{
+  margin-top: 18px;
+  font-size: 18px;
+  margin-left: 40px;
+}
+
+.order-detail-button{
+  font-size: 14px;
+  color: black;
+  border: 2px black solid;
+  border-radius: 5px;
+
+padding-left: 10px;
+padding-right: 10px;
+}

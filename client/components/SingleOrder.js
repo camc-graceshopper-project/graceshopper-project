@@ -1,10 +1,11 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {fetchSingleOrder, updateOneOrder} from '../store/singleOrder'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { fetchSingleOrder, updateOneOrder } from '../store/singleOrder'
 import orders from '../store/orders';
-import {Card} from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 
+import './SingleOrder.css'
 
 class SingleOrder extends React.Component {
   componentDidMount() {
@@ -12,33 +13,47 @@ class SingleOrder extends React.Component {
   }
   render() {
     const order = this.props.singleOrder
+    const products = order.products || [];
+    
+    let total = 0;
+    products.forEach((item) => {
+      total = total + item.price
+    })
+    
     return (
       <div>
-    {!order.products ? (
-      <div>No Products!</div>
-    ) : (
-        <div>
+        {!order.products ? (
+          <div>No Products!</div>
+        ) : (
+            <div id="order-detail-page-container">
 
-          {order.products.map(product => {
+              {order.products.map(product => {
 
-            return (
-              <div key={product.id}>
-                  <h1>Order Details</h1>
-                  <p>Order# {order.id}</p>
-                  <img src={product.image} />
-                  <p>Order Placed {order.createdAt.slice(0,10)}</p>
-                  <h3>{product.name}</h3>
-                  <p>Product Description: {product.description}</p>
-                  <p>Quantity: {product['order-product'].quantity}</p>
-                  <p>Order Total: ${order.totalPrice}</p>
-                  <p>Status: {order.status}</p>
-              </div>
-            )
-          })}
-        </div>
-      )}
+                return (
+                  <div key={product.id}>
+                    <div className="product-card">
+                      <Link to={`/products/${product.id}`}>
+                        <img className="product-image" src={product.image} />
+                      </Link>
+
+                      <div className="product-details">
+                        <Link to={`/products/${product.id}`}>
+                          <span className="product-name">{product.name}</span>
+                        </Link>
+                        <span>${product.price}</span>
+                        <span>Quantity: 1</span>
+                      </div></div></div>
+                )
+              })}
+              <div>
+                <h2>Total: ${total}</h2>
+                </div>
+              
+              
+            </div>
+          )}
       </div>
-      )
+    )
   }
 }
 

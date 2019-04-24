@@ -1,20 +1,18 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
+import './AdminPanel.css'
+
 export default class AdminPanel extends React.Component {
   render() {
     return (
-      <div>
-        <Link to="/adminpanel/postproduct">Create New Product</Link>
-        <br />
-        <br />
-        <Link to="/add-category">Add New Category</Link>
-        <br />
-        <br />
-        <Link to='/make-user-admin'>Make User An Admin</Link>
-        <br />
-        <br />
-        <Link to="/orders">View All Orders</Link>
+      <div id="admin-panel-container">
+        <Link className="admin-link" to="/adminpanel/postproduct">Create New Product</Link>
+        <Link className="admin-link" to="/add-category">Add New Category</Link>
+
+        <Link className="admin-link" to='/make-user-admin'>Make User An Admin</Link>
+
+        <Link className="admin-link" to="/orders">View All Orders</Link>
       </div>
     )
   }

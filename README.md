@@ -7,3 +7,5 @@ A simple, e-commerce website built using JavaScript, React, Redux, Sequelize, an
 Has Google OAuth implemented, users are able to create accounts with persistent carts and are able to checkout using Stripe.
 
 There are also admin users with extra capabilities such as deleting users, editing/updating products, and more.
+
+(style had to take a backseat for this one!)
